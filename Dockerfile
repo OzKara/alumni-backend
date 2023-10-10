@@ -5,7 +5,7 @@ FROM openjdk:17
 VOLUME /tmp
 
 # Add the application's jar to the container at /app.jar
-ADD build/libs/*.jar app.jar
+COPY build/libs/*.jar app.jar
 
 # Run app.jar when the container starts
 ENTRYPOINT ["java", "-jar", "/app.jar"]
