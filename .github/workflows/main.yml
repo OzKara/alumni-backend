@@ -38,11 +38,11 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y azure-cli
+          az --version
           
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Explicit Azure CLI Login
+        run: |
+          az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
