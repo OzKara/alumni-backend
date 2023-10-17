@@ -24,4 +24,15 @@ public class User {
 
     @Column(unique = true)
     private String email;
+
+    /*
+        @Column(nullable = false)
+    private String profile_picture;
+
+    @Column(length = 2000)
+    private String biography;
+
+    @Column(length = 50)
+    private String fun_fact;
+     */
 }
