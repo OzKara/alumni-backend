@@ -1,4 +1,3 @@
-/*
 package accelerate.alumni.alumnibackend.controller;
 
 import accelerate.alumni.alumnibackend.model.Post;
@@ -67,4 +66,3 @@ public class PostController {
         return ResponseEntity.noContent().build();
     }
 }
-*/

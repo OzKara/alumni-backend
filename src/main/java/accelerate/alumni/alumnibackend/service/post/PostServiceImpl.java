@@ -1,4 +1,3 @@
-/*
 package accelerate.alumni.alumnibackend.service.post;
 
 import accelerate.alumni.alumnibackend.model.Post;
@@ -53,4 +52,3 @@ public class PostServiceImpl implements PostService {
         }
     }
 }
-*/

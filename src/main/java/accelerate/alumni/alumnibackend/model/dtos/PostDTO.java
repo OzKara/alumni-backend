@@ -1,4 +1,3 @@
-/*
 package accelerate.alumni.alumnibackend.model.dtos;
 
 
@@ -13,4 +12,3 @@ public class PostDTO {
     private String title;
     private String content;
 }
-*/
