@@ -1,6 +1,6 @@
 package accelerate.alumni.alumnibackend.service.user;
 
-import accelerate.alumni.alumnibackend.model.User;
+/*import accelerate.alumni.alumnibackend.model.User;
 import accelerate.alumni.alumnibackend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -43,4 +43,4 @@ public class UserServiceImpl implements UserService{
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
-}
+}*/

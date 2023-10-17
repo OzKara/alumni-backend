@@ -1,4 +1,4 @@
-package accelerate.alumni.alumnibackend.controller;
+/*package accelerate.alumni.alumnibackend.controller;
 
 import accelerate.alumni.alumnibackend.model.Post;
 import accelerate.alumni.alumnibackend.mappers.PostMapper;
@@ -65,4 +65,4 @@ public class PostController {
         postService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-}
+}*/

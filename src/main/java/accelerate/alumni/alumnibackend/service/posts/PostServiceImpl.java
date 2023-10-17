@@ -1,4 +1,6 @@
-package accelerate.alumni.alumnibackend.service.post;
+package accelerate.alumni.alumnibackend.service.posts;
+
+
 
 import accelerate.alumni.alumnibackend.exceptions.PostNotFoundException;
 import accelerate.alumni.alumnibackend.model.Post;
