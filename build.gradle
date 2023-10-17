@@ -28,16 +28,14 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 	implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
 	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-
-	compileOnly 'org.projectlombok:lombok'
-
-	runtimeOnly 'org.postgresql:postgresql'
-
-	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.keycloak:keycloak-spring-boot-starter:22.0.4'
+	implementation 'org.keycloak:keycloak-spring-security-adapter'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
-
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
 }
 
 tasks.named('test') {
