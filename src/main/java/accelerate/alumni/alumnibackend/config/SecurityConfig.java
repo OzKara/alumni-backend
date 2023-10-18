@@ -19,9 +19,7 @@ public class SecurityConfig {
                 .sessionManagement().disable()
                 .csrf().disable()
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v1/resources/public ").permitAll() //All have access
-                        .requestMatchers("/api/v1/resources/scope").hasAuthority("SCOPE_profile") //User with right Scope has access
-                        .requestMatchers("/api/v1/resources/role").hasRole("ROLE_admin") //User with right role has access
+                        .requestMatchers("/api/**").permitAll() //All have access
                         .anyRequest().authenticated()
                 ).oauth2ResourceServer()
                 .jwt()

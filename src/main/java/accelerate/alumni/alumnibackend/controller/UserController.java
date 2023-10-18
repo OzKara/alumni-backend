@@ -4,10 +4,12 @@ import accelerate.alumni.alumnibackend.mappers.UserMapper;
 import accelerate.alumni.alumnibackend.model.dtos.UserDTO;
 import accelerate.alumni.alumnibackend.service.user.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@PreAuthorize("hasRole('user')")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
