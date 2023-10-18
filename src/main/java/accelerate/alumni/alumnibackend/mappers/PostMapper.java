@@ -1,4 +1,3 @@
-/*
 package accelerate.alumni.alumnibackend.mappers;
 
 import accelerate.alumni.alumnibackend.model.Post;
@@ -13,14 +12,5 @@ import org.springframework.beans.factory.annotation.Autowired;
 public interface PostMapper {
     PostDTO toDTO(Post post);
     Post toEntity(PostDTO postDTO);
-
-    protected User mapToUser(Long userId) {
-        return userService.findById(userId);
-    }
-
-    protected Long mapToUserId(User user) {
-        return user.getId();
-    }
-
 }
-*/
+
