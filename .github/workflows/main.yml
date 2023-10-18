@@ -44,6 +44,10 @@ jobs:
         run: |
           az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
 
+      - name: Set WEBSITES_PORT for Azure Web App
+        run: |
+          az webapp config appsettings set --name alumni-web --resource-group alumni --settings WEBSITES_PORT=8080
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
