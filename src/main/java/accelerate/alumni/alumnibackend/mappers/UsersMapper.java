@@ -1,17 +1,18 @@
 package accelerate.alumni.alumnibackend.mappers;
 
+import accelerate.alumni.alumnibackend.models.Groups;
+import accelerate.alumni.alumnibackend.models.Post;
+import accelerate.alumni.alumnibackend.models.Users;
+import accelerate.alumni.alumnibackend.models.dto.users.UsersDTO;
+import accelerate.alumni.alumnibackend.models.dto.users.UsersMiniDTO;
+import accelerate.alumni.alumnibackend.models.dto.users.UsersPostDTO;
+import accelerate.alumni.alumnibackend.models.dto.users.UsersPutDTO;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import accelerate.alumni.alumnibackend.model.Groups;
-import accelerate.alumni.alumnibackend.model.Post;
-import accelerate.alumni.alumnibackend.model.Users;
-import accelerate.alumni.alumnibackend.model.dtos.users.UsersDTO;
-import accelerate.alumni.alumnibackend.model.dtos.users.UsersMiniDTO;
-import accelerate.alumni.alumnibackend.model.dtos.users.UsersPostDTO;
-import accelerate.alumni.alumnibackend.model.dtos.users.UsersPutDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

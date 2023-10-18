@@ -1,13 +1,16 @@
 package accelerate.alumni.alumnibackend.mappers;
 
-import accelerate.alumni.alumnibackend.model.Groups;
-import accelerate.alumni.alumnibackend.model.Post;
-import accelerate.alumni.alumnibackend.model.dtos.group.GroupDTO;
-import accelerate.alumni.alumnibackend.model.dtos.group.GroupPostDTO;
-import accelerate.alumni.alumnibackend.model.dtos.group.GroupPutDTO;
+import accelerate.alumni.alumnibackend.models.Groups;
+import accelerate.alumni.alumnibackend.models.Post;
+import accelerate.alumni.alumnibackend.models.dto.group.GroupDTO;
+import accelerate.alumni.alumnibackend.models.dto.group.GroupPostDTO;
+import accelerate.alumni.alumnibackend.models.dto.group.GroupPutDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +30,7 @@ public interface GroupMapper {
     Groups groupPostDTOToGroup(GroupPostDTO groupPostDTO);
 
     @Named(value = "postsToPostId")
-    default Set<Long> map(Set<Post> value) {
+    default Set<Integer> map(Set<Post> value) {
         if (value == null)
             return new HashSet<>();
         return value.stream()
