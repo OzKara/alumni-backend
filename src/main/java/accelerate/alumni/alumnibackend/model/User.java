@@ -21,6 +21,9 @@ public class User {
     private String picture;
 
     @Column
+    private String status;
+
+    @Column
     private String bio;
 
     @Column(name = "fun_fact")

@@ -8,6 +8,7 @@ import accelerate.alumni.alumnibackend.model.dtos.user.UserMiniDTO;
 import accelerate.alumni.alumnibackend.model.dtos.user.UserPostDTO;
 import accelerate.alumni.alumnibackend.model.dtos.user.UserPutDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.util.Collection;
@@ -17,9 +18,9 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-    // @Mapping(target = "posts", qualifiedByName = "postsToPostId")
-    // @Mapping(target = "posted", qualifiedByName = "postsToPostId")
-    //@Mapping(target = "groups", qualifiedByName = "groupsToGroupsId") // kommenterte ut denne
+    //@Mapping(target = "posts", qualifiedByName = "postsToPostId")
+    //@Mapping(target = "posted", qualifiedByName = "postsToPostId")
+    @Mapping(target = "groups", qualifiedByName = "groupsToGroupsId")
     //@Mapping(target = "topics", qualifiedByName = "topicsToTopicsId")
     //@Mapping(target = "createdAt", source = "createdAt")
     //@Mapping(target = "updatedAt", source = "updatedAt")

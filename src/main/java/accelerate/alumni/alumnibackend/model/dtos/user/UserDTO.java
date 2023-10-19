@@ -14,5 +14,5 @@ public class UserDTO {
     private String status;
     private String bio;
     private String funFact;
-    private Set<Integer> groups;
+    private Set<Long> groups;
 }

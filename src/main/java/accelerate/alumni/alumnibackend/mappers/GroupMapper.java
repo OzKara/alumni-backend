@@ -6,6 +6,7 @@ import accelerate.alumni.alumnibackend.model.dtos.group.GroupDTO;
 import accelerate.alumni.alumnibackend.model.dtos.group.GroupPostDTO;
 import accelerate.alumni.alumnibackend.model.dtos.group.GroupPutDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.util.Collection;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface GroupMapper {
-    // @Mapping(target = "posts", qualifiedByName = "postsToPostId")
+    //@Mapping(target = "posts", qualifiedByName = "postsToPostId")
     //@Mapping(target = "createdAt", source = "createdAt")
     //@Mapping(target = "updatedAt", source = "updatedAt")
     GroupDTO groupToGroupDTO(Group group);
