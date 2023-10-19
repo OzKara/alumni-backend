@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")  // Using 'users' because 'user' can be a reserved keyword in some databases
@@ -13,23 +12,30 @@ import java.util.List;
 @Setter
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(unique = true, nullable = false)
-    private String username;
+    private String id;
 
     @Column(nullable = false)
-    private String firstName;
+    private String name;
 
-    @Column(nullable = false)
-    private String lastName;
+    @Column
+    private String picture;
 
-    @Column(unique = true)
-    private String email;
+    @Column
+    private String bio;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts = new ArrayList<>();
+    @Column(name = "fun_fact")
+    private String funFact;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Group> groups;
+
+    // This is the users "DM" posts
+    @OneToMany(mappedBy = "targetUser")
+    private Set<Post> posts;
+
+    // This is the users own posts
+    @OneToMany(mappedBy = "senderId")
+    private Set<Post> posted;
 
     /*
         @Column(nullable = false)

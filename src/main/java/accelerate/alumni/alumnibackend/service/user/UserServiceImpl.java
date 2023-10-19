@@ -2,6 +2,7 @@ package accelerate.alumni.alumnibackend.service.user;
 
 import accelerate.alumni.alumnibackend.model.User;
 import accelerate.alumni.alumnibackend.repository.UserRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -15,8 +16,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public User findById(String id) {
+        return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(id));
     }
 
     @Override
@@ -35,12 +36,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean existsById(Long id) {
+    public boolean existsById(String id) {
         return userRepository.existsById(id);
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         userRepository.deleteById(id);
     }
 }

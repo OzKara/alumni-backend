@@ -1,17 +1,29 @@
 package accelerate.alumni.alumnibackend.controller;
 
 import accelerate.alumni.alumnibackend.mappers.UserMapper;
-import accelerate.alumni.alumnibackend.model.dtos.UserDTO;
+import accelerate.alumni.alumnibackend.model.User;
+import accelerate.alumni.alumnibackend.model.dtos.user.UserDTO;
+import accelerate.alumni.alumnibackend.model.dtos.user.UserMiniDTO;
+import accelerate.alumni.alumnibackend.model.dtos.user.UserPutDTO;
 import accelerate.alumni.alumnibackend.service.user.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.net.URI;
+import java.util.Collection;
+import java.util.Base64;
 
 @PreAuthorize("hasRole('user')")
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
@@ -21,36 +33,87 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
-        return ResponseEntity.ok(userMapper.toDTO(userService.findById(id)));
+    @GetMapping("{id}")
+    @Operation(summary = "Get a user by its id", tags = {"Users", "Get"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = UserDTO.class))),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+    })
+    public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+        return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findById(id)));
+    }
+
+    @GetMapping("/list")
+    @Operation(summary = "Get all user summaries", tags = {"Users", "Get"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            array = @ArraySchema(schema = @Schema(implementation = UserMiniDTO.class)))})
+    })
+    public ResponseEntity<Collection<UserMiniDTO>> findAll() {
+        return ResponseEntity.ok(userMapper.usersToUsersMiniDTO(userService.findAll()));
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        return ResponseEntity.ok(userService.findAll().stream().map(userMapper::toDTO).toList());
+    @Operation(summary = "Get all users", tags = {"Users", "Get"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            array = @ArraySchema(schema = @Schema(implementation = UserDTO.class)))})
+    })
+    public ResponseEntity<UserDTO> findCurrentUser() {
+        // TODO Make this 303 See Other
+        String id = "lucas";
+        return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findById(id)));
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userMapper.toDTO(userService.add(userMapper.toEntity(userDTO))));
+    @Operation(summary = "Add a user", tags = {"Users", "Post"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created", content = @Content)
+    })
+    public ResponseEntity<UserDTO> add() {
+        String id = "10";
+        String name = "new user";
+
+        User user = new User();
+        user.setId(id);
+        user.setName(name);
+        userService.add(user);
+        URI uri = URI.create("api/v1/users/" + user.getId());
+
+        return ResponseEntity.created(uri).body(userMapper.usersToUsersDTO(userService.findById(id)));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
-        if (!userService.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        userDTO.setId(id);
-        return ResponseEntity.ok(userMapper.toDTO(userService.update(userMapper.toEntity(userDTO))));
+    @PutMapping("{id}")
+    @Operation(summary = "Update a user", tags = {"Users", "Put"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "User updated", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad request, URI does not match request body", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+    })
+    public ResponseEntity<UserDTO> update(@RequestBody UserPutDTO entity, @PathVariable String id) {
+        if (!userService.existsById(id))
+            return ResponseEntity.badRequest().build();
+
+        User users = userMapper.usersPutDTOToUsers(entity);
+        users.setId(id);
+        userService.update(users);
+        return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findById(id)));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        if (!userService.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        userService.deleteById(id);
-        return ResponseEntity.noContent().build();
+    private String getNameFromToken(String token) {
+        String[] chunks = token.split("\\.");
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+        String payload = new String(decoder.decode(chunks[1]));
+        System.out.println(payload);
+        int nameIndex = payload.indexOf("\"name\":");
+        String nameChunk = payload.substring(nameIndex);
+        System.out.println(nameChunk);
+        String[] nameChunks = nameChunk.split("\"");
+        System.out.println(nameChunks[3]);
+        return nameChunks[3];
     }
 }
