@@ -14,5 +14,5 @@ public class UsersDTO {
     private String status;
     private String bio;
     private String funFact;
-    private Set<Integer> groups;
+    private Set<Integer> groups; // Ensure the field name matches the entity field
 }

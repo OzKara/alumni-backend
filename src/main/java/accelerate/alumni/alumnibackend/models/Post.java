@@ -23,7 +23,6 @@ public class Post {
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private java.time.ZonedDateTime updatedAt;
-    @Column
     private String title;
     @Column(length = 4000)
     private String content;
@@ -48,6 +47,4 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Groups targetGroup;
-
-
 }
