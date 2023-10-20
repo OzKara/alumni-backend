@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface GroupMapper {
-    // @Mapping(target = "posts", qualifiedByName = "postsToPostId")
+    //@Mapping(target = "posts", qualifiedByName = "postsToPostId")
     //@Mapping(target = "createdAt", source = "createdAt")
     //@Mapping(target = "updatedAt", source = "updatedAt")
     GroupDTO groupToGroupDTO(Groups group);

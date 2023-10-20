@@ -1,5 +1,6 @@
 package accelerate.alumni.alumnibackend.models.dto.users;
 
+import accelerate.alumni.alumnibackend.models.Groups;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,5 +15,5 @@ public class UsersDTO {
     private String status;
     private String bio;
     private String funFact;
-    private Set<Integer> groups; // Ensure the field name matches the entity field
+    private Set<Groups> groups; // Ensure the field name matches the entity field
 }

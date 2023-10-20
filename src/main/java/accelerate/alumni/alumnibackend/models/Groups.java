@@ -21,12 +21,7 @@ public class Groups {
     private String color;
     @Column(name="is_private")
     private boolean isPrivate;
-    @ManyToMany
-    @JoinTable(
-            name = "group_user",
-            joinColumns = {@JoinColumn(name = "groups_id")},
-            inverseJoinColumns = {@JoinColumn(name = "users_id")}
-    )
+    @ManyToMany(mappedBy = "groups")
     private Set<Users> users;
     @OneToMany(mappedBy = "targetGroup")
     private Set<Post> posts;

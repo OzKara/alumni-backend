@@ -19,7 +19,12 @@ public class Users {
     private String status;
     private String bio;
     private String funFact;
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany
+    @JoinTable(
+            name = "group_user",
+            joinColumns = {@JoinColumn(name = "users_id")},
+            inverseJoinColumns = {@JoinColumn(name = "groups_id")}
+    )
     private Set<Groups> groups;
     @OneToMany(mappedBy = "targetUser")
     private Set<Post> posts;
