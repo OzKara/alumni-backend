@@ -108,19 +108,6 @@ public class UserController {
         return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findById(id)));
     }
 
-    private String getNameFromToken(String token) {
-        String[] chunks = token.split("\\.");
-        Base64.Decoder decoder = Base64.getUrlDecoder();
-        String payload = new String(decoder.decode(chunks[1]));
-        System.out.println(payload);
-        int nameIndex = payload.indexOf("\"name\":");
-        String nameChunk = payload.substring(nameIndex);
-        System.out.println(nameChunk);
-        String[] nameChunks = nameChunk.split("\"");
-        System.out.println(nameChunks[3]);
-        return nameChunks[3];
-    }
-
     @GetMapping("info")
     public ResponseEntity getLoggedInUserInfo(@AuthenticationPrincipal Jwt principal) {
         Map<String, String> map = new HashMap<>();
