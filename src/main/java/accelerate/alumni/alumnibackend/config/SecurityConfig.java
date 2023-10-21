@@ -19,7 +19,7 @@ public class SecurityConfig {
                 .sessionManagement().disable()
                 .csrf().disable()
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/**").permitAll() //All have access
+                        .requestMatchers("/api/users").permitAll() //All have access
                         .anyRequest().authenticated()
                 ).oauth2ResourceServer()
                 .jwt()
