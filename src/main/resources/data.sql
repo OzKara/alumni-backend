@@ -1,26 +1,26 @@
 INSERT INTO Users (id, name, picture, status, bio, fun_fact)
-VALUES ('c28668b9-57b1-4779-b5ce-fbc1cb7878a8',
-        'Eivind',
+VALUES ('nicholas',
+        'Nicholas Lennox',
         'https://ychef.files.bbci.co.uk/976x549/p07ryyyj.jpg',
         'Smol criminal',
         'Introducing Eivind, a curious and adventurous cat who enjoys exploring new places and playing with toys that make crinkly sounds.',
         'Did you know that Oslo is home to the world''s longest art gallery, which is located in the city''s subway system and features over 100 unique works of art?');
 INSERT INTO Users (id, name, picture, status, bio, fun_fact)
-VALUES ('1e97e97c-83e1-453f-8f87-87a659e84153',
+VALUES ('hashir',
         'Hashir Raja',
         'https://i.ytimg.com/vi/fOd16PT1S7A/maxresdefault.jpg',
         'The Great Catsby',
         'Meet Martin, a playful and cuddly feline who loves nothing more than chasing laser pointers and napping in sunny spots around the house.',
         'Why is it so easy to weigh tuna? - They have their own scales');
 INSERT INTO Users (id, name, picture, status, bio, fun_fact)
-VALUES ('21bc1535-4a49-483f-92ef-c305f91dc1ef',
+VALUES ('henning',
         'Henning Sletner',
         'https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg',
         'Cat me some slack, will you?',
         'A cat above the rest.',
         'Purr-haps we can cuddle later.');
 INSERT INTO Users (id, name, picture, status, bio, fun_fact)
-VALUES ('18b14274-4bb2-461f-a293-2941a1b9dea1',
+VALUES ('ozan',
         'Ozan Kara',
         'https://i.pinimg.com/564x/32/f2/43/32f24381b05fcf53d8088c98963fe326.jpg',
         'It''s a cat-astrophy!',
@@ -53,13 +53,13 @@ VALUES ( '.Net Kurs',
 
 INSERT INTO group_user ("groups_id", "users_id")
 VALUES (1, 'lucas');
-VALUES (2, 'c28668b9-57b1-4779-b5ce-fbc1cb7878a8');
+VALUES (2, 'henning');
 INSERT INTO group_user ("groups_id", "users_id")
-VALUES (2, '1e97e97c-83e1-453f-8f87-87a659e84153');
+VALUES (2, 'ozan');
 INSERT INTO group_user ("groups_id", "users_id")
-VALUES (2, '21bc1535-4a49-483f-92ef-c305f91dc1ef');
+VALUES (2, 'hashir');
 INSERT INTO group_user ("groups_id", "users_id")
-VALUES (2, '18b14274-4bb2-461f-a293-2941a1b9dea1');
+VALUES (2, 'nicholas');
 INSERT INTO group_user ("groups_id", "users_id")
 VALUES (2, 'lucas');
 INSERT INTO group_user ("groups_id", "users_id")
@@ -81,7 +81,7 @@ VALUES ('2023-04-02 14:45', '2023-04-02', 'TOPIC', 'lucas', 1,
 
 -- Post 3
 INSERT INTO Posts (created_at, updated_at, post_target, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-04-03 12:30', '2023-04-03', 'TOPIC', 'lucas', 1,
+VALUES ('2023-04-03 12:30', '2023-04-03', 'TOPIC', 'ozan', 1,
         'Simplicity in Design',
         'Designing with simplicity in mind is like telling a story with few words - it ensures clarity and ease of use.' ||
         '![simplicity](https://example.com/simplicity-image.jpg)', 2);
