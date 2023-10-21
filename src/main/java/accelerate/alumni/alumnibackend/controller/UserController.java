@@ -116,4 +116,16 @@ public class UserController {
         System.out.println(nameChunks[3]);
         return nameChunks[3];
     }
+
+    @GetMapping("info")
+    public ResponseEntity getLoggedInUserInfo(@AuthenticationPrincipal Jwt principal) {
+        Map<String, String> map = new HashMap<>();
+        map.put("subject", principal.getClaimAsString("sub"));
+        map.put("user_name", principal.getClaimAsString("preferred_username"));
+        map.put("email", principal.getClaimAsString("email"));
+        map.put("first_name", principal.getClaimAsString("given_name"));
+        map.put("last_name", principal.getClaimAsString("family_name"));
+        map.put("roles", String.valueOf(principal.getClaimAsStringList("roles")));
+        return ResponseEntity.ok(map);
+    }
 }
