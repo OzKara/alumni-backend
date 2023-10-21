@@ -5,7 +5,7 @@ VALUES ('nicholas', 'Nicholas Lennox',
         'Introducing Eivind, a curious and adventurous cat who enjoys exploring new places and playing with toys that make crinkly sounds.',
         'Did you know that Oslo is home to the world''s longest art gallery, which is located in the city''s subway system and features over 100 unique works of art?');
 INSERT INTO Users (id, name, picture, status, bio, fun_fact)
-VALUES ('hashir',  'Hashir Raja',
+VALUES ('hashir',  'Hashir gay',
         'https://i.ytimg.com/vi/fOd16PT1S7A/maxresdefault.jpg',
         'The Great Catsby',
         'Meet Martin, a playful and cuddly feline who loves nothing more than chasing laser pointers and napping in sunny spots around the house.',
