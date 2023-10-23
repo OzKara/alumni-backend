@@ -191,7 +191,7 @@ public class PostController {
         return ResponseEntity.ok(postMapper.postToPostDTO(postService.findAllPostsToUserFromSpecificUser(userId, senderId, searching, limiting, offsetting)));
     }
 
-    @GetMapping
+    /*@GetMapping
     @Operation(summary = "Get all posts a user is subscribed to", tags = {"Posts", "Users", "Get"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success",
@@ -223,7 +223,7 @@ public class PostController {
         return ResponseEntity.ok(postMapper.postToPostDTO(postService.findPostsFromTopicUserIsSubscribedTo(userId, searching, limiting, offsetting)));
     }*/
 
-    @GetMapping("/group")
+    /*@GetMapping("/group")
     @Operation(summary = "Get all posts from groups a user is subscribed to", tags = {"Posts", "Group", "Users", "Get"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success",
@@ -238,7 +238,7 @@ public class PostController {
         int offsetting = offset.orElse(0);
         return ResponseEntity.ok(postMapper.postToPostDTO(postService.findPostsFromGroupUserIsSubscribedTo(userId, searching, limiting, offsetting)));
     }
-
+*/
     @GetMapping("{id}/replies")
     @Operation(summary = "Get all replies for a post", tags = {"Posts", "Users", "Get"})
     @ApiResponses(value = {

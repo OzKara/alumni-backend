@@ -141,7 +141,7 @@ public class GroupController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("{id}/leave")
+    /*@PutMapping("{id}/leave")
     @Operation(summary = "Remove a user from a group", tags = {"Group", "Users", "Put"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Group updated", content = @Content),
@@ -156,7 +156,7 @@ public class GroupController {
         String userId = userInfo.get("subject");
         groupService.removeUserFromGroup(userId, id);
         return ResponseEntity.noContent().build();
-    }
+    }*/
 
     @GetMapping("/user")
     @Operation(summary = "Get all groups for a user", tags = {"Group", "Users", "Get"})
