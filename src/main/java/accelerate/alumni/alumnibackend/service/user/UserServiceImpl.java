@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -43,5 +44,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public void deleteById(String id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

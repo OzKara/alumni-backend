@@ -21,10 +21,8 @@
     import org.springframework.web.bind.annotation.*;
 
     import java.net.URI;
-    import java.util.Collection;
-    import java.util.Base64;
-    import java.util.HashMap;
-    import java.util.Map;
+    import java.util.*;
+    import java.util.stream.Collectors;
 
     @PreAuthorize("hasRole('user')")
     @RestController
@@ -53,7 +51,7 @@
         }
 
         @GetMapping("/list")
-        @Operation(summary = "Get all user summaries", tags = {"User", "Get"})
+        @Operation(summary = "Get all users", tags = {"User", "Get"})
         @ApiResponses(value = {
                 @ApiResponse(responseCode = "200", description = "Success",
                         content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -63,8 +61,8 @@
             return ResponseEntity.ok(userMapper.usersToUsersMiniDTO(userService.findAll()));
         }
 
-        @GetMapping
-        @Operation(summary = "Get all users", tags = {"User", "Get"})
+        @GetMapping("/current")
+        @Operation(summary = "Get current user", tags = {"User", "Get"})
         @ApiResponses(value = {
                 @ApiResponse(responseCode = "200", description = "Success",
                         content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -75,6 +73,21 @@
             Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
             String id = userInfo.get("subject");
             return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findById(id)));
+        }
+
+        @GetMapping("/users")
+        @Operation(summary = "Get all users", tags = {"User", "Get All"})
+        @ApiResponses(value = {
+                @ApiResponse(responseCode = "200", description = "Success",
+                        content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                array = @ArraySchema(schema = @Schema(implementation = UserDTO.class)))})
+        })
+        public ResponseEntity<List<UserDTO>> getAllUsers() {
+            List<User> users = userService.getAllUsers();
+            List<UserDTO> userDTOs = users.stream()
+                    .map(userMapper::usersToUsersDTO)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(userDTOs);
         }
 
         @PostMapping
