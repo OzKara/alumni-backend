@@ -259,7 +259,8 @@ public class PostController {
     })
     public ResponseEntity<Object> addReplyToPost(
             @RequestBody String replyContent, // Assuming a simple string for the reply content
-            @PathVariable Long id
+            @PathVariable Long id,
+            @AuthenticationPrincipal Jwt principal
     ) {
         // Load the parent post by postId
         Post parentPost = postService.findById(id);
@@ -271,9 +272,11 @@ public class PostController {
         // Create a new post for the reply
         Post replyPost = new Post();
 
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
+        String userId = userInfo.get("subject");
         // Set the reply content and sender ID
         replyPost.setContent(replyContent);
-        replyPost.setSenderId(parentPost.getSenderId()); // Replace with the appropriate user ID
+        replyPost.setSenderId(userService.findById(userId)); // Replace with the appropriate user ID
 
         // Set the origin and replyParentId for the reply
         replyPost.setOrigin(parentPost);
