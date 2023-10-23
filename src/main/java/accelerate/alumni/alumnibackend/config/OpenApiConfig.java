@@ -16,7 +16,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
         tags = {
                 @Tag(name = "Group", description = "All endpoints related to groups"),
                 @Tag(name = "Post", description = "All endpoints related to posts"),
-                @Tag(name = "Event", description = "All endpoints related to events"),
                 @Tag(name = "User", description = "All endpoints related to users"),
                 @Tag(name = "Get", description = "All get endpoints"),
                 @Tag(name = "Post", description = "All post endpoints"),

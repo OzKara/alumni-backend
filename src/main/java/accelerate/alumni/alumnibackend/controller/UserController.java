@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    @Operation(summary = "Get a user by its id", tags = {"Users", "Get"})
+    @Operation(summary = "Get a user by its id", tags = {"User", "Get"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    @Operation(summary = "Get all user summaries", tags = {"Users", "Get"})
+    @Operation(summary = "Get all user summaries", tags = {"User", "Get"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @GetMapping
-    @Operation(summary = "Get all users", tags = {"Users", "Get"})
+    @Operation(summary = "Get all users", tags = {"User", "Get"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success",
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -74,7 +74,7 @@ public class UserController {
     }
 
     @PostMapping
-    @Operation(summary = "Add a user", tags = {"Users", "Post"})
+    @Operation(summary = "Add a user", tags = {"User", "Post"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created", content = @Content)
     })
@@ -92,7 +92,7 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    @Operation(summary = "Update a user", tags = {"Users", "Put"})
+    @Operation(summary = "Update a user", tags = {"User", "Put"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "User updated", content = @Content),
             @ApiResponse(responseCode = "400", description = "Bad request, URI does not match request body", content = @Content),
