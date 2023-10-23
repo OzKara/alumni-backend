@@ -18,7 +18,7 @@ public class CorsConfig implements WebMvcConfigurer {
         String allowedOrigin = environment.getProperty("SPRING_ALLOWED_ORIGIN");
 
         registry.addMapping("/**")
-                .allowedOrigins(allowedOrigin, "http://localhost:3000", "http://locahost:8080")
+                .allowedOrigins(allowedOrigin, "http://localhost:3000", "http://locahost:8080", "https://alumni-case-frontend.vercel.app/")
                 .allowedMethods("GET", "POST", "PUT")
                 .maxAge(3600);
     }
