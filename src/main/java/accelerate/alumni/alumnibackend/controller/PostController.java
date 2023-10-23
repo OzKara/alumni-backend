@@ -5,6 +5,7 @@ import accelerate.alumni.alumnibackend.mappers.PostMapper;
 import accelerate.alumni.alumnibackend.model.dtos.post.PostDTO;
 import accelerate.alumni.alumnibackend.model.dtos.post.PostPostDTO;
 import accelerate.alumni.alumnibackend.model.dtos.post.PostPutDTO;
+import accelerate.alumni.alumnibackend.model.dtos.post.ReplyDTO;
 import accelerate.alumni.alumnibackend.service.post.PostService;
 import accelerate.alumni.alumnibackend.service.user.UserService;
 import accelerate.alumni.alumnibackend.util.KeycloakInfo;
@@ -267,10 +268,11 @@ public class PostController {
             @ApiResponse(responseCode = "201", description = "Created", content = @Content)
     })
     public ResponseEntity<Object> addReplyToPost(
-            @RequestBody String replyContent, // Assuming a simple string for the reply content
+            @RequestBody ReplyDTO replyDTO,// Request body as a Map
             @PathVariable Long id,
             @AuthenticationPrincipal Jwt principal
     ) {
+        String replyContent = replyDTO.getReplyContent();
         // Load the parent post by postId
         Post parentPost = postService.findById(id);
 
