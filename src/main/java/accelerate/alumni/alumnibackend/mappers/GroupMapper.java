@@ -1,16 +1,14 @@
 package accelerate.alumni.alumnibackend.mappers;
 
-import accelerate.alumni.alumnibackend.models.Groups;
-import accelerate.alumni.alumnibackend.models.Post;
-import accelerate.alumni.alumnibackend.models.dto.group.GroupDTO;
-import accelerate.alumni.alumnibackend.models.dto.group.GroupPostDTO;
-import accelerate.alumni.alumnibackend.models.dto.group.GroupPutDTO;
+import accelerate.alumni.alumnibackend.model.Group;
+import accelerate.alumni.alumnibackend.model.Post;
+import accelerate.alumni.alumnibackend.model.dtos.group.GroupDTO;
+import accelerate.alumni.alumnibackend.model.dtos.group.GroupPostDTO;
+import accelerate.alumni.alumnibackend.model.dtos.group.GroupPutDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.time.Instant;
-import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,16 +19,16 @@ public interface GroupMapper {
     //@Mapping(target = "posts", qualifiedByName = "postsToPostId")
     //@Mapping(target = "createdAt", source = "createdAt")
     //@Mapping(target = "updatedAt", source = "updatedAt")
-    GroupDTO groupToGroupDTO(Groups group);
+    GroupDTO groupToGroupDTO(Group group);
 
-    Collection<GroupDTO> groupToGroupDTO(Collection<Groups> groups);
+    Collection<GroupDTO> groupToGroupDTO(Collection<Group> groups);
 
-    Groups groupPutDTOToGroup(GroupPutDTO groupPutDTO);
+    Group groupPutDTOToGroup(GroupPutDTO groupPutDTO);
 
-    Groups groupPostDTOToGroup(GroupPostDTO groupPostDTO);
+    Group groupPostDTOToGroup(GroupPostDTO groupPostDTO);
 
     @Named(value = "postsToPostId")
-    default Set<Integer> map(Set<Post> value) {
+    default Set<Long> map(Set<Post> value) {
         if (value == null)
             return new HashSet<>();
         return value.stream()

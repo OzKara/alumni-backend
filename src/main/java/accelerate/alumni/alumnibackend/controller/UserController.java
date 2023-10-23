@@ -1,56 +1,114 @@
-package accelerate.alumni.alumnibackend.controller;
+    package accelerate.alumni.alumnibackend.controller;
 
-import accelerate.alumni.alumnibackend.mappers.UserMapper;
-import accelerate.alumni.alumnibackend.model.dtos.UserDTO;
-import accelerate.alumni.alumnibackend.service.user.UserService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+    import accelerate.alumni.alumnibackend.mappers.UserMapper;
+    import accelerate.alumni.alumnibackend.model.User;
+    import accelerate.alumni.alumnibackend.model.dtos.user.UserDTO;
+    import accelerate.alumni.alumnibackend.model.dtos.user.UserMiniDTO;
+    import accelerate.alumni.alumnibackend.model.dtos.user.UserPutDTO;
+    import accelerate.alumni.alumnibackend.service.user.UserService;
+    import accelerate.alumni.alumnibackend.util.KeycloakInfo;
+    import io.swagger.v3.oas.annotations.Operation;
+    import io.swagger.v3.oas.annotations.media.ArraySchema;
+    import io.swagger.v3.oas.annotations.media.Content;
+    import io.swagger.v3.oas.annotations.media.Schema;
+    import io.swagger.v3.oas.annotations.responses.ApiResponse;
+    import io.swagger.v3.oas.annotations.responses.ApiResponses;
+    import org.springframework.http.MediaType;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.security.access.prepost.PreAuthorize;
+    import org.springframework.security.core.annotation.AuthenticationPrincipal;
+    import org.springframework.security.oauth2.jwt.Jwt;
+    import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+    import java.net.URI;
+    import java.util.Collection;
+    import java.util.Base64;
+    import java.util.HashMap;
+    import java.util.Map;
 
-@PreAuthorize("hasRole('user')")
-@RestController
-@RequestMapping("/api/users")
-public class UserController {
-    private final UserService userService;
-    private final UserMapper userMapper;
+    @PreAuthorize("hasRole('user')")
+    @RestController
+    @RequestMapping("/api/v1/users")
+    public class UserController {
+        private final UserService userService;
+        private final UserMapper userMapper;
+        private final KeycloakInfo keycloakInfo;
 
-    public UserController(UserService userService, UserMapper userMapper) {
-        this.userService = userService;
-        this.userMapper = userMapper;
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
-        return ResponseEntity.ok(userMapper.toDTO(userService.findById(id)));
-    }
-
-    @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        return ResponseEntity.ok(userService.findAll().stream().map(userMapper::toDTO).toList());
-    }
-
-    @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userMapper.toDTO(userService.add(userMapper.toEntity(userDTO))));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
-        if (!userService.existsById(id)) {
-            return ResponseEntity.notFound().build();
+        public UserController(UserService userService, UserMapper userMapper, KeycloakInfo keycloakInfo) {
+            this.userService = userService;
+            this.userMapper = userMapper;
+            this.keycloakInfo = keycloakInfo;
         }
-        userDTO.setId(id);
-        return ResponseEntity.ok(userMapper.toDTO(userService.update(userMapper.toEntity(userDTO))));
-    }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        if (!userService.existsById(id)) {
-            return ResponseEntity.notFound().build();
+        @GetMapping("{id}")
+        @Operation(summary = "Get a user by its id", tags = {"User", "Get"})
+        @ApiResponses(value = {
+                @ApiResponse(responseCode = "200", description = "Success",
+                        content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                schema = @Schema(implementation = UserDTO.class))),
+                @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+        })
+        public ResponseEntity<UserDTO> findById(@PathVariable String id) {
+            return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findById(id)));
         }
-        userService.deleteById(id);
-        return ResponseEntity.noContent().build();
+
+        @GetMapping("/list")
+        @Operation(summary = "Get all user summaries", tags = {"User", "Get"})
+        @ApiResponses(value = {
+                @ApiResponse(responseCode = "200", description = "Success",
+                        content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                array = @ArraySchema(schema = @Schema(implementation = UserMiniDTO.class)))})
+        })
+        public ResponseEntity<Collection<UserMiniDTO>> findAll() {
+            return ResponseEntity.ok(userMapper.usersToUsersMiniDTO(userService.findAll()));
+        }
+
+        @GetMapping
+        @Operation(summary = "Get all users", tags = {"User", "Get"})
+        @ApiResponses(value = {
+                @ApiResponse(responseCode = "200", description = "Success",
+                        content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                array = @ArraySchema(schema = @Schema(implementation = UserDTO.class)))})
+        })
+        public ResponseEntity<UserDTO> findCurrentUser(@AuthenticationPrincipal Jwt principal) {
+            // TODO Make this 303 See Other
+            Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
+            String id = userInfo.get("subject");
+            return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findById(id)));
+        }
+
+        @PostMapping
+        @Operation(summary = "Add a user", tags = {"User", "Post"})
+        @ApiResponses(value = {
+                @ApiResponse(responseCode = "201", description = "Created", content = @Content)
+        })
+        public ResponseEntity<UserDTO> add() {
+            String id = "10";
+            String name = "new user";
+
+            User user = new User();
+            user.setId(id);
+            user.setName(name);
+            userService.add(user);
+            URI uri = URI.create("api/v1/users/" + user.getId());
+
+            return ResponseEntity.created(uri).body(userMapper.usersToUsersDTO(userService.findById(id)));
+        }
+
+        @PutMapping("{id}")
+        @Operation(summary = "Update a user", tags = {"User", "Put"})
+        @ApiResponses(value = {
+                @ApiResponse(responseCode = "204", description = "User updated", content = @Content),
+                @ApiResponse(responseCode = "400", description = "Bad request, URI does not match request body", content = @Content),
+                @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+        })
+        public ResponseEntity<UserDTO> update(@RequestBody UserPutDTO entity, @PathVariable String id) {
+            if (!userService.existsById(id))
+                return ResponseEntity.badRequest().build();
+
+            User users = userMapper.usersPutDTOToUsers(entity);
+            users.setId(id);
+            userService.update(users);
+            return ResponseEntity.ok(userMapper.usersToUsersDTO(userService.findById(id)));
+        }
     }
-}
