@@ -6,14 +6,14 @@ VALUES ('nicholas',
         'Introducing Eivind, a curious and adventurous cat who enjoys exploring new places and playing with toys that make crinkly sounds.',
         'Did you know that Oslo is home to the world''s longest art gallery, which is located in the city''s subway system and features over 100 unique works of art?');
 INSERT INTO Users (id, name, picture, status, bio, fun_fact)
-VALUES ('hashir',
+VALUES ('d7ab172c-7cab-4bf1-b94e-3e38a7400793',
         'Hashir Raja',
         'https://i.ytimg.com/vi/fOd16PT1S7A/maxresdefault.jpg',
         'The Great Catsby',
         'Meet Martin, a playful and cuddly feline who loves nothing more than chasing laser pointers and napping in sunny spots around the house.',
         'Why is it so easy to weigh tuna? - They have their own scales');
 INSERT INTO Users (id, name, picture, status, bio, fun_fact)
-VALUES ('henning',
+VALUES ('7e68cd4b-7bd0-4ab1-b2df-09bf54f7e87e',
         'Henning Sletner',
         'https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg',
         'Cat me some slack, will you?',
@@ -27,7 +27,7 @@ VALUES ('ozan',
         'Born fluffy, still fluffy.',
         'What do you call a tuna with a tie? - Sofishticated');
 INSERT INTO Users (id, name, picture, status, bio, fun_fact)
-VALUES ('lucas',
+VALUES ('700a6c07-f116-4cb4-bf7e-0930a9d4b9ad',
         'Lucas Tran',
         'https://cdn.drawception.com/images/avatars/647493-B9E.png',
         'ARBEIDSLEDIG',
