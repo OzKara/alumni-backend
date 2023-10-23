@@ -9,7 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.util.Set;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "post")
 @Getter
 @Setter
 public class Post {
