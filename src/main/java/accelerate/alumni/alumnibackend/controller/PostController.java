@@ -255,7 +255,7 @@ public class PostController {
         Post post = postService.findById(id);
 
         List<Post> replies = post.getReplies().stream()
-                .sorted(Comparator.comparing(Post::getId).reversed())
+                .sorted(Comparator.comparing(Post::getId))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(postMapper.postToPostDTO(replies));
