@@ -268,11 +268,11 @@ public class PostController {
             @ApiResponse(responseCode = "201", description = "Created", content = @Content)
     })
     public ResponseEntity<Object> addReplyToPost(
-            @RequestBody ReplyDTO replyDTO,// Request body as a Map
+            @RequestBody ReplyDTO replyDTO,
             @PathVariable Long id,
             @AuthenticationPrincipal Jwt principal
     ) {
-        String replyContent = replyDTO.getReplyContent();
+        String replyContent = replyDTO.getContent();
         // Load the parent post by postId
         Post parentPost = postService.findById(id);
 
