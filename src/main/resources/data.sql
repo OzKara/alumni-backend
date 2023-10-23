@@ -65,30 +65,32 @@ VALUES (2, '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad');
 INSERT INTO group_user ("groups_id", "users_id")
 VALUES (3, '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad');
 INSERT INTO group_user ("groups_id", "users_id")
-VALUES (4, '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad');-- Post 1
-INSERT INTO Posts (created_at, updated_at, post_target, owner_id, origin_id, title, content, group_id)
+VALUES (4, '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad');
+
+-- Post 1
+INSERT INTO Post (created_at, updated_at, post_target, owner_id, origin_id, title, content, group_id)
 VALUES ('2023-04-01 10:15', '2023-04-01', 'TOPIC', '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad', 1,
         'The Art of Typography',
         'Typography in design is like the notes in a beautiful song - it sets the tone and rhythm of your message.' ||
         '![typography](https://example.com/typography-image.jpg)', 2);
 
 -- Post 2
-INSERT INTO Posts (created_at, updated_at, post_target, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-04-02 14:45', '2023-04-02', 'TOPIC', '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad', 1,
+INSERT INTO Post (created_at, updated_at, owner_id, origin_id, title, content, group_id)
+VALUES ('2023-04-02 14:45', '2023-04-02', '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad', 1,
         'The Colors of UX',
         'Choosing the right color palette for your user interface is like painting a masterpiece - it evokes emotions and enhances the user experience.' ||
         '![color palette](https://example.com/color-palette-image.jpg)', 2);
 
 -- Post 3
-INSERT INTO Posts (created_at, updated_at, post_target, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-04-03 12:30', '2023-04-03', 'TOPIC', 'ozan', 1,
+INSERT INTO Post (created_at, updated_at, owner_id, origin_id, title, content, group_id)
+VALUES ('2023-04-03 12:30', '2023-04-03', 'ozan', 1,
         'Simplicity in Design',
         'Designing with simplicity in mind is like telling a story with few words - it ensures clarity and ease of use.' ||
         '![simplicity](https://example.com/simplicity-image.jpg)', 2);
 
 -- Post 4
-INSERT INTO Posts (created_at, updated_at, post_target, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-04-04 17:20', '2023-04-04', 'TOPIC', '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad', 1,
+INSERT INTO Post (created_at, updated_at, owner_id, origin_id, title, content, group_id)
+VALUES ('2023-04-04 17:20', '2023-04-04', '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad', 1,
         'Responsive Web Design',
         'Creating responsive web designs is like building a flexible house - it adapts to different screen sizes and devices.' ||
         '![responsive design](https://example.com/responsive-design-image.jpg)', 2);
