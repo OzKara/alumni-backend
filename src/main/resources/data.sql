@@ -13,7 +13,7 @@ VALUES ('hashir',
         'Meet Martin, a playful and cuddly feline who loves nothing more than chasing laser pointers and napping in sunny spots around the house.',
         'Why is it so easy to weigh tuna? - They have their own scales');
 INSERT INTO Users (id, name, picture, status, bio, fun_fact)
-VALUES ('henning',
+VALUES ('7e68cd4b-7bd0-4ab1-b2df-09bf54f7e87e',
         'Henning Sletner',
         'https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg',
         'Cat me some slack, will you?',

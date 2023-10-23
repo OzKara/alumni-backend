@@ -7,6 +7,7 @@ import accelerate.alumni.alumnibackend.model.dtos.post.PostPostDTO;
 import accelerate.alumni.alumnibackend.model.dtos.post.PostPutDTO;
 import accelerate.alumni.alumnibackend.service.post.PostService;
 import accelerate.alumni.alumnibackend.service.user.UserService;
+import accelerate.alumni.alumnibackend.util.KeycloakInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,11 +18,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.security.Principal;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 
 @PreAuthorize("hasRole('user')")
@@ -30,11 +34,13 @@ import java.util.Optional;
 public class PostController {
     private final PostService postService;
     private final PostMapper postMapper;
+    private final KeycloakInfo keycloakInfo;
     private final UserService userService;
 
-    public PostController(PostService postService, PostMapper postMapper, UserService userService) {
+    public PostController(PostService postService, PostMapper postMapper, KeycloakInfo keycloakInfo, UserService userService) {
         this.postService = postService;
         this.postMapper = postMapper;
+        this.keycloakInfo = keycloakInfo;
         this.userService = userService;
     }
 
@@ -48,10 +54,11 @@ public class PostController {
             @ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
 
     })
-    public ResponseEntity<PostDTO> findById(Principal principal, @PathVariable Long id) {
+    public ResponseEntity<PostDTO> findById(@AuthenticationPrincipal Jwt principal, @PathVariable Long id) {
 
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
         Post post = postService.findById(id);
-        String userId = "lucas";
+        String userId = userInfo.get("subject");
         /*if (post.getPostTarget().equals("USER") && (post.getTargetUser().getId().equals(userId) || post.getSenderId().getId().equals(userId)))
         if (post.getPostTarget().equals("GROUP") && (!post.getTargetGroup().isPrivate() || post.getTargetGroup().getUsers().contains(usersService.findById(userId))))
             return ResponseEntity.ok(postMapper.postToPostDTO(post));

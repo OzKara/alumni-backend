@@ -10,6 +10,7 @@ import accelerate.alumni.alumnibackend.model.dtos.group.GroupPutDTO;
 import accelerate.alumni.alumnibackend.model.dtos.user.UserDTO;
 import accelerate.alumni.alumnibackend.service.group.GroupService;
 import accelerate.alumni.alumnibackend.service.user.UserService;
+import accelerate.alumni.alumnibackend.util.KeycloakInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,13 +21,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @PreAuthorize("hasRole('user')")
 @RestController
@@ -36,12 +36,14 @@ public class GroupController {
     private final GroupMapper groupMapper;
     private final UserService userService;
     private final UserMapper userMapper;
+    private final KeycloakInfo keycloakInfo;
 
-    public GroupController(GroupService groupService, GroupMapper groupMapper, UserService userService, UserMapper userMapper) {
+    public GroupController(GroupService groupService, GroupMapper groupMapper, UserService userService, UserMapper userMapper, KeycloakInfo keycloakInfo) {
         this.groupService = groupService;
         this.groupMapper = groupMapper;
         this.userService = userService;
         this.userMapper = userMapper;
+        this.keycloakInfo = keycloakInfo;
     }
 
     @GetMapping("{id}")
@@ -52,10 +54,11 @@ public class GroupController {
                             schema = @Schema(implementation = GroupDTO.class))),
             @ApiResponse(responseCode = "404", description = "Group not found", content = @Content)
     })
-    public ResponseEntity<GroupDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<GroupDTO> findById(@PathVariable Long id, @AuthenticationPrincipal Jwt principal) {
         if (!groupService.existsById(id))
             return ResponseEntity.notFound().build();
-        String userId = "lucas";
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
+        String userId = userInfo.get("subject");
         GroupDTO group = groupMapper.groupToGroupDTO(groupService.findByIdWhereUserHasAccess(userId, id));
         if (group == null)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -69,8 +72,9 @@ public class GroupController {
                     content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                             array = @ArraySchema(schema = @Schema(implementation = GroupDTO.class)))})
     })
-    public ResponseEntity<Collection<GroupDTO>> findAll(@RequestParam Optional<String> search, Optional<Integer> limit, Optional<Integer> offset) {
-        String userId = "lucas";
+    public ResponseEntity<Collection<GroupDTO>> findAll(@RequestParam Optional<String> search, Optional<Integer> limit, Optional<Integer> offset, @AuthenticationPrincipal Jwt principal) {
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
+        String userId = userInfo.get("subject");
         return ResponseEntity.ok(groupMapper.groupToGroupDTO(
                 groupService.searchResultsWithLimitOffset(userId, search.orElse("").toLowerCase(), offset.orElse(0), limit.orElse(99999999))));
     }
@@ -80,9 +84,10 @@ public class GroupController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created", content = @Content)
     })
-    public ResponseEntity<Object> add(@RequestBody GroupPostDTO entity) {
+    public ResponseEntity<Object> add(@RequestBody GroupPostDTO entity, @AuthenticationPrincipal Jwt principal) {
         Group group = groupMapper.groupPostDTOToGroup(entity);
-        String id = "lucas";
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
+        String id = userInfo.get("subject");;
         Set<User> user = new HashSet<>();
         user.add(userService.findById(id));
         group.setUsers(user);
@@ -98,10 +103,11 @@ public class GroupController {
             @ApiResponse(responseCode = "400", description = "Bad request, URI does not match request body", content = @Content),
             @ApiResponse(responseCode = "404", description = "Group not found", content = @Content)
     })
-    public ResponseEntity<Object> update(@RequestBody GroupPutDTO entity, @PathVariable Long id) {
+    public ResponseEntity<Object> update(@RequestBody GroupPutDTO entity, @PathVariable Long id, @AuthenticationPrincipal Jwt principal) {
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
         if (!groupService.existsById(id))
             return ResponseEntity.badRequest().build();
-        if (!groupService.checkIfUserInGroup("lucas", id))
+        if (!groupService.checkIfUserInGroup(userInfo.get("subject"), id))
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         Group group = groupMapper.groupPutDTOToGroup(entity);
         Group oldGroup = groupService.findById(id);
@@ -117,18 +123,19 @@ public class GroupController {
             @ApiResponse(responseCode = "201", description = "Created", content = @Content),
             @ApiResponse(responseCode = "401", description = "Forbidden", content = @Content)
     })
-    public ResponseEntity<Object> addUserToGroup( @PathVariable Long id, @RequestParam Optional<String> user) {
+    public ResponseEntity<Object> addUserToGroup( @PathVariable Long id, @RequestParam Optional<String> user, @AuthenticationPrincipal Jwt principal) {
         if (!groupService.existsById(id))
             return ResponseEntity.badRequest().build();
 
         boolean privateGroup = groupService.findById(id).isPrivate();
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
         if (privateGroup) {
-            if (!groupService.checkIfUserInGroup("lucas", id))
+            if (!groupService.checkIfUserInGroup(userInfo.get("subject"), id))
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         String userId = user.orElse("");
         if (userId.equals("")) {
-            userId = "lucas";
+            userId = userInfo.get("subject");
         }
         groupService.addUserToGroup(userId, id);
         return ResponseEntity.noContent().build();
@@ -141,11 +148,12 @@ public class GroupController {
             @ApiResponse(responseCode = "400", description = "Bad request, URI does not match request body", content = @Content),
             @ApiResponse(responseCode = "404", description = "Group not found", content = @Content)
     })
-    public ResponseEntity<Object> removeUserFromGroup( @PathVariable Long id) {
+    public ResponseEntity<Object> removeUserFromGroup( @PathVariable Long id, @AuthenticationPrincipal Jwt principal) {
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
         if (!groupService.existsById(id))
             return ResponseEntity.badRequest().build();
 
-        String userId = "lucas";
+        String userId = userInfo.get("subject");
         groupService.removeUserFromGroup(userId, id);
         return ResponseEntity.noContent().build();
     }
@@ -158,8 +166,9 @@ public class GroupController {
                             array = @ArraySchema(schema = @Schema(implementation = GroupDTO.class)))),
             @ApiResponse(responseCode = "404", description = "Group not found", content = @Content)
     })
-    public ResponseEntity<Collection<GroupDTO>> findGroupsForAUser() {
-        String userId = "lucas";
+    public ResponseEntity<Collection<GroupDTO>> findGroupsForAUser(@AuthenticationPrincipal Jwt principal) {
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
+        String userId = userInfo.get("subject");
         return ResponseEntity.ok(groupMapper.groupToGroupDTO(groupService.findGroupsWithUser(userId)));
     }
 
