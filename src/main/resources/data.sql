@@ -52,29 +52,29 @@ VALUES ( '.Net Kurs',
          '#008B8B', false);
 
 INSERT INTO group_user ("groups_id", "users_id")
-VALUES (1, 'lucas');
-VALUES (2, 'henning');
+VALUES (1, '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad');
+VALUES (2, '7e68cd4b-7bd0-4ab1-b2df-09bf54f7e87e');
 INSERT INTO group_user ("groups_id", "users_id")
 VALUES (2, 'ozan');
 INSERT INTO group_user ("groups_id", "users_id")
-VALUES (2, 'hashir');
+VALUES (2, 'd7ab172c-7cab-4bf1-b94e-3e38a7400793');
 INSERT INTO group_user ("groups_id", "users_id")
 VALUES (2, 'nicholas');
 INSERT INTO group_user ("groups_id", "users_id")
-VALUES (2, 'lucas');
+VALUES (2, '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad');
 INSERT INTO group_user ("groups_id", "users_id")
-VALUES (3, 'lucas');
+VALUES (3, '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad');
 INSERT INTO group_user ("groups_id", "users_id")
-VALUES (4, 'lucas');-- Post 1
+VALUES (4, '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad');-- Post 1
 INSERT INTO Posts (created_at, updated_at, post_target, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-04-01 10:15', '2023-04-01', 'TOPIC', 'lucas', 1,
+VALUES ('2023-04-01 10:15', '2023-04-01', 'TOPIC', '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad', 1,
         'The Art of Typography',
         'Typography in design is like the notes in a beautiful song - it sets the tone and rhythm of your message.' ||
         '![typography](https://example.com/typography-image.jpg)', 2);
 
 -- Post 2
 INSERT INTO Posts (created_at, updated_at, post_target, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-04-02 14:45', '2023-04-02', 'TOPIC', 'lucas', 1,
+VALUES ('2023-04-02 14:45', '2023-04-02', 'TOPIC', '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad', 1,
         'The Colors of UX',
         'Choosing the right color palette for your user interface is like painting a masterpiece - it evokes emotions and enhances the user experience.' ||
         '![color palette](https://example.com/color-palette-image.jpg)', 2);
@@ -88,7 +88,7 @@ VALUES ('2023-04-03 12:30', '2023-04-03', 'TOPIC', 'ozan', 1,
 
 -- Post 4
 INSERT INTO Posts (created_at, updated_at, post_target, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-04-04 17:20', '2023-04-04', 'TOPIC', 'lucas', 1,
+VALUES ('2023-04-04 17:20', '2023-04-04', 'TOPIC', '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad', 1,
         'Responsive Web Design',
         'Creating responsive web designs is like building a flexible house - it adapts to different screen sizes and devices.' ||
         '![responsive design](https://example.com/responsive-design-image.jpg)', 2);
