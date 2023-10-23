@@ -24,9 +24,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.security.Principal;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @PreAuthorize("hasRole('user')")
 @RestController
@@ -95,10 +94,13 @@ public class PostController {
             @ApiResponse(responseCode = "403", description = "Access denied to the post", content = @Content),
             @ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
     })
-    public ResponseEntity<Object> update(Principal principal, @RequestBody PostPutDTO entity, @PathVariable Long id) {
+    public ResponseEntity<Object> update(@AuthenticationPrincipal Jwt principal, @RequestBody PostPutDTO entity, @PathVariable Long id) {
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
+        String userId = userInfo.get("subject");
+
         if (!postService.existsById(id))
             return ResponseEntity.badRequest().build();
-        if (postService.findById(id).getSenderId().getId().equals("lucas"))
+        if (postService.findById(id).getSenderId().getId().equals(userId))
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 
         Post post = postMapper.postPutDTOToPost(entity);
@@ -167,8 +169,9 @@ public class PostController {
                             array = @ArraySchema(schema = @Schema(implementation = PostDTO.class)))),
             @ApiResponse(responseCode = "404", description = "Posts not found", content = @Content)
     })
-    public ResponseEntity<Collection<PostDTO>> findAllPostsToAUser(Principal principal, @RequestParam Optional<String> search, Optional<Integer> limit, Optional<Integer> offset) {
-        String userId = "lucas";
+    public ResponseEntity<Collection<PostDTO>> findAllPostsToAUser(@AuthenticationPrincipal Jwt principal, @RequestParam Optional<String> search, Optional<Integer> limit, Optional<Integer> offset) {
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
+        String userId = userInfo.get("subject");
         String searching = search.orElse("").toLowerCase();
         int limiting = limit.orElse(999999999);
         int offsetting = offset.orElse(0);
@@ -183,8 +186,9 @@ public class PostController {
                             array = @ArraySchema(schema = @Schema(implementation = PostDTO.class)))),
             @ApiResponse(responseCode = "404", description = "Posts not found", content = @Content)
     })
-    public ResponseEntity<Collection<PostDTO>> findAllPostsToAUser(Principal principal, @PathVariable String senderId, @RequestParam Optional<String> search, Optional<Integer> limit, Optional<Integer> offset) {
-        String userId = "lucas";
+    public ResponseEntity<Collection<PostDTO>> findAllPostsToAUser(@AuthenticationPrincipal Jwt principal, @PathVariable String senderId, @RequestParam Optional<String> search, Optional<Integer> limit, Optional<Integer> offset) {
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
+        String userId = userInfo.get("subject");
         String searching = search.orElse("").toLowerCase();
         int limiting = limit.orElse(999999999);
         int offsetting = offset.orElse(0);
@@ -249,7 +253,12 @@ public class PostController {
     })
     public ResponseEntity<Collection<PostDTO>> findRepliesToAPost(@PathVariable Long id) {
         Post post = postService.findById(id);
-        return ResponseEntity.ok(postMapper.postToPostDTO(post.getReplies()));
+
+        List<Post> replies = post.getReplies().stream()
+                .sorted(Comparator.comparing(Post::getId).reversed())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(postMapper.postToPostDTO(replies));
     }
 
     @PostMapping("/{id}/replies")

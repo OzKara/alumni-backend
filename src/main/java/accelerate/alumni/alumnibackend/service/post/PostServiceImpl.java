@@ -55,11 +55,6 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Set<Post> findAllPostsInTopic(int id, String search, int limit, int offset) {
-        return postRepository.findPostsInATopicWithSearchLimitOffset(id, search, limit, offset);
-    }
-
-    @Override
     public Set<Post> findAllPostsInGroup(int id, String search, int limit, int offset) {
         return postRepository.findPostsInAGroupWithSearchLimitOffset(id, search, limit, offset);
     }
@@ -72,23 +67,6 @@ public class PostServiceImpl implements PostService {
     @Override
     public Set<Post> findAllPostsToUserFromSpecificUser(String id, String senderId, String search, int limit, int offset) {
         return postRepository.findPostsToUserFromSpecificUserWithSearchLimitOffset(id, senderId, search, limit, offset);
-    }
-
-    @Override
-    public Set<Post> findPostsUserSubscribedTo(String id, String search, int limit, int offset) {
-        if(search == "")
-            return postRepository.findPostsThatUserSubscribesToWithLimitOffset(id, search, limit, offset);
-        return postRepository.findPostsThatUserSubscribesToWithSearchLimitOffset(id, search, limit, offset);
-    }
-
-    @Override
-    public Set<Post> findPostsFromTopicUserIsSubscribedTo(String id, String search, int limit, int offset) {
-        return postRepository.findAllPostsFromATopicUserIsSubscribedTo(id, search, limit, offset);
-    }
-
-    @Override
-    public Set<Post> findPostsFromGroupUserIsSubscribedTo(String id, String search, int limit, int offset) {
-        return postRepository.findAllPostsFromAGroupUserIsSubscribedTo(id, search, limit, offset);
     }
 
 }

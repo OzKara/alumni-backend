@@ -9,8 +9,6 @@ import java.util.Set;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    @Query(value = "select * from Post p where p.parent_id is null and p.topic_id = ?1 and ((lower(p.title) like (%?2%) or (lower(p.content) like (%?2%)))) ORDER BY created_at DESC limit ?3 offset ?4", nativeQuery = true)
-    Set<Post> findPostsInATopicWithSearchLimitOffset(int topicId, String search, int limit, int offset);
 
     @Query(value = "select * from Post p where p.parent_id is null and p.group_id = ?1 and ((lower(p.title) like (%?2%) or (lower(p.content) like (%?2%)))) ORDER BY created_at DESC limit ?3 offset ?4", nativeQuery = true)
     Set<Post> findPostsInAGroupWithSearchLimitOffset(int topicId, String search, int limit, int offset);
