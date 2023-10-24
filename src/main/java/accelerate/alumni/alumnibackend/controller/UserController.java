@@ -106,12 +106,22 @@
             }
 
             User user = new User();
-            user.setId(id);
-            user.setName(name);
-            user.setPicture("https://mybroadband.co.za/news/wp-content/uploads/2017/04/Twitter-profile-picture.jpg");
-            user.setBio("My Bio");
-            user.setFunFact("My Funfact");
-            user.setStatus("My Status");
+
+            if(name.toLowerCase().equals("nicholas lennox")) {
+                user.setId(id);
+                user.setName("Nicholassius Lennoxius");
+                user.setStatus("I am very proud South African");
+                user.setPicture("https://static.noroff.no/cms/ansatte/acc/nicholas-lennox.jpg");
+                user.setBio("Okaaaaay lezgo");
+                user.setFunFact("Did you know that i have a world record in how many students i can hit in one minute");
+            } else {
+                user.setId(id);
+                user.setName(name);
+                user.setPicture("https://mybroadband.co.za/news/wp-content/uploads/2017/04/Twitter-profile-picture.jpg");
+                user.setBio("My Bio");
+                user.setFunFact("My Funfact");
+                user.setStatus("My Status");
+            }
             userService.add(user);
             URI uri = URI.create("api/v1/users/" + user.getId());
 
