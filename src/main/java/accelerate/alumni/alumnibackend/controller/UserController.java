@@ -13,6 +13,7 @@
     import io.swagger.v3.oas.annotations.media.Schema;
     import io.swagger.v3.oas.annotations.responses.ApiResponse;
     import io.swagger.v3.oas.annotations.responses.ApiResponses;
+    import org.springframework.http.HttpStatus;
     import org.springframework.http.MediaType;
     import org.springframework.http.ResponseEntity;
     import org.springframework.security.access.prepost.PreAuthorize;
@@ -95,9 +96,14 @@
         @ApiResponses(value = {
                 @ApiResponse(responseCode = "201", description = "Created", content = @Content)
         })
-        public ResponseEntity<UserDTO> add() {
-            String id = "10";
-            String name = "new user";
+        public ResponseEntity<UserDTO> add(@AuthenticationPrincipal Jwt principal) {
+            Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
+            String id = userInfo.get("subject");
+            String name = userInfo.get("first_name");
+
+            if (userService.existsById(id)) {
+                 return null;
+            }
 
             User user = new User();
             user.setId(id);
