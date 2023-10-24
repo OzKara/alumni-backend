@@ -1,7 +1,7 @@
 INSERT INTO Users (id, name, picture, status, bio, fun_fact)
 VALUES ('4535e26b-692c-4fc6-a1c9-9e164d1daf7c',
         'Nicholas Lennox',
-        'https://fullstack-oslo-aug-23.slack.com/team/U05LDCDG932',
+        'https://ca.slack-edge.com/T05AYAELMFV-U05LDCDG932-0b045ebe1c9a-512',
         'Teaching important stuff',
         'Probably the best Java instructor in the world and i LOVE php, i think its the best programming language in the world <3',
         'My favorite food is pizza-rolls and pop-tarts and i like to combine them and it it for dinner');
@@ -15,14 +15,14 @@ VALUES ('d7ab172c-7cab-4bf1-b94e-3e38a7400793',
 INSERT INTO Users (id, name, picture, status, bio, fun_fact)
 VALUES ('7e68cd4b-7bd0-4ab1-b2df-09bf54f7e87e',
         'Henning Sletner',
-        'https://fullstack-oslo-aug-23.slack.com/team/U05M987B2U8',
+        'https://ca.slack-edge.com/T05AYAELMFV-U05M987B2U8-c57553490856-512',
         'Working hard or hardly working',
         'På god vei til å nå mine fremtidige planer om at all iskrem blir ulovlig.',
         'Er ca 197cm høy, men nei jeg har ikke gjort noe i livet som man skulle tro en høy perosn har gjort.');
 INSERT INTO Users (id, name, picture, status, bio, fun_fact)
 VALUES ('71677904-aa91-4894-96b7-45521a921172',
         'Ozan Kara',
-        'https://fullstack-oslo-aug-23.slack.com/team/U05M988LNJC',
+        'https://ca.slack-edge.com/T05AYAELMFV-U05M988LNJC-a50b35d49be8-512',
         'Trøbbel med dama',
         'Vet ikke helt hva jeg driver med, men det funker!',
         'Flytter kanskje til Barcelona snart, får se hvor sur dama er.');
