@@ -99,7 +99,7 @@
         public ResponseEntity<UserDTO> add(@AuthenticationPrincipal Jwt principal) {
             Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
             String id = userInfo.get("subject");
-            String name = userInfo.get("first_name");
+            String name = userInfo.get("first_name") + " " + userInfo.get("last_name");
 
             if (userService.existsById(id)) {
                  return null;
