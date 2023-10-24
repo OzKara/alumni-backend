@@ -107,7 +107,7 @@
 
             User user = new User();
 
-            if(name.toLowerCase().equals("nicholas lennox")) {
+            if(name.equalsIgnoreCase("nicholas lennox")) {
                 user.setId(id);
                 user.setName("Nicholassius Lennoxius");
                 user.setStatus("I am very proud South African");
