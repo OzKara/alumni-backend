@@ -107,7 +107,6 @@ public class PostController {
 
         // Create the URI for the newly created post
         URI uri = URI.create("api/v1/posts/" + post.getId());
-
         return ResponseEntity.created(uri).body(post.getId());
     }
 
