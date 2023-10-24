@@ -44,6 +44,23 @@ public class PostController {
         this.userService = userService;
     }
 
+    @GetMapping("/list")
+    @Operation(summary = "Get all posts", tags = {"Posts", "Get"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = PostDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Posts not found", content = @Content)
+
+    })
+    public ResponseEntity<Collection<PostDTO>> findAllPosts() {
+        Collection<Post> post = postService.findAllTopLevelPosts().stream()
+                .sorted(Comparator.comparing(Post::getId).reversed())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(postMapper.postToPostDTO(post));
+    }
+
     @GetMapping("{id}")
     @Operation(summary = "Get a post by its id", tags = {"Posts", "Get"})
     @ApiResponses(value = {
@@ -75,15 +92,22 @@ public class PostController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created", content = @Content)
     })
-    public ResponseEntity<Object> add(@RequestBody PostPostDTO entity) {
-        Post post = postMapper.postPostDTOToPost(entity);
-        Post parentPost = post;
-        while (parentPost.getReplyParentId() != null) {
-            parentPost = parentPost.getReplyParentId();
-        }
-        post.setOrigin(parentPost);
+    public ResponseEntity<Object> add(@AuthenticationPrincipal Jwt principal, @RequestBody PostPostDTO entity) {
+        // Get the currently authenticated user's ID from the Keycloak principal
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
+        String userId = userInfo.get("subject");
+
+        // Create the Post object with the required fields
+        Post post = new Post();
+        post.setTitle(entity.getTitle());
+        post.setContent(entity.getContent());
+        post.setSenderId(userService.findById(userId));
+
         postService.add(post);
-        URI uri = URI.create("api/v1/post/" + post.getId());
+
+        // Create the URI for the newly created post
+        URI uri = URI.create("api/v1/posts/" + post.getId());
+
         return ResponseEntity.created(uri).body(post.getId());
     }
 
@@ -262,6 +286,7 @@ public class PostController {
         return ResponseEntity.ok(postMapper.postToPostDTO(replies));
     }
 
+
     @PostMapping("/{id}/replies")
     @Operation(summary = "Add a reply to a post", tags = {"Posts", "Replies", "Post"})
     @ApiResponses(value = {
@@ -302,4 +327,6 @@ public class PostController {
         URI uri = URI.create("api/v1/post/" + replyPostId);
         return ResponseEntity.created(uri).body(replyPostId);
     }
+
+
 }

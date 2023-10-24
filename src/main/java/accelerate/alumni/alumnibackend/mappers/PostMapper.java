@@ -46,10 +46,10 @@ public abstract class PostMapper {
 
     public abstract Post postPutDTOToPost(PostPutDTO postPutDTO);
 
-    @Mapping(target = "senderId", source = "senderId")
-    @Mapping(target = "replyParentId", source = "replyParentId", qualifiedByName = "parentPostIdToPost")
-    @Mapping(target = "targetUser", source = "targetUser", qualifiedByName = "userIdToUser")
-    @Mapping(target = "targetGroup", source = "targetGroup", qualifiedByName = "groupIdToGroup")
+    //@Mapping(target = "senderId", source = "senderId")
+    //@Mapping(target = "replyParentId", source = "replyParentId", qualifiedByName = "parentPostIdToPost")
+    //@Mapping(target = "targetUser", source = "targetUser", qualifiedByName = "userIdToUser")
+    //@Mapping(target = "targetGroup", source = "targetGroup", qualifiedByName = "groupIdToGroup")
     public abstract Post postPostDTOToPost(PostPostDTO postPostDTO);
 
     @Named(value = "userToSenderDTO")

@@ -27,6 +27,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Collection<Post> findAllTopLevelPosts() {
+        return postRepository.findByReplyParentIdIsNull();
+    }
+
+    @Override
     public Post add(Post post) {
         return postRepository.save(post);
     }
