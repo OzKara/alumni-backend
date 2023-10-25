@@ -113,7 +113,7 @@
                 user.setStatus("I am very proud South African");
                 user.setPicture("https://static.noroff.no/cms/ansatte/acc/nicholas-lennox.jpg");
                 user.setBio("Okaaaaay lezgo");
-                user.setFunFact("Did you know that i have a world record in how many students i can hit in one minute");
+                user.setFunFact("Did you know that i have the world record in how many students i can roast in a day?, I am very proud of that, by the way");
             } else {
                 user.setId(id);
                 user.setName(name);
