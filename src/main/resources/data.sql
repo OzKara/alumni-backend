@@ -122,14 +122,6 @@ VALUES  (3, 'mockuser5');
 INSERT INTO group_user ("groups_id", "users_id")
 VALUES  (3, 'mockuser7');
 INSERT INTO group_user ("groups_id", "users_id")
-VALUES  (3, 'mockuser8');
-INSERT INTO group_user ("groups_id", "users_id")
-VALUES  (3, 'mockuser9');
-INSERT INTO group_user ("groups_id", "users_id")
-VALUES  (3, 'mockuser10');
-INSERT INTO group_user ("groups_id", "users_id")
-VALUES  (3, 'mockuser11');
-INSERT INTO group_user ("groups_id", "users_id")
 VALUES  (3, 'mockuser12');
 INSERT INTO group_user ("groups_id", "users_id")
 VALUES  (4, 'mockuser8');
