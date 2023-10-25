@@ -27,7 +27,7 @@ VALUES ('71677904-aa91-4894-96b7-45521a921172',
         'Vet ikke helt hva jeg driver med, men det funker!',
         'Flytter kanskje til Barcelona snart, får se hvor sur dama er.');
 INSERT INTO Users (id, name, picture, status, bio, fun_fact)
-VALUES ('700a6c07-f116-4cb4-bf7e-0930a9d4b9ad',
+VALUES ('8828d6bd-b2d0-4bd4-aaae-4cb5f03c834a',
         'Lucas Tran',
         'https://cdn.drawception.com/images/avatars/647493-B9E.png',
         'Dont know what im doing',
@@ -92,7 +92,7 @@ VALUES ( 'Students',
          '#008B8B', false);
 
 INSERT INTO group_user ("groups_id", "users_id")
-VALUES (1, '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad');
+VALUES (1, '8828d6bd-b2d0-4bd4-aaae-4cb5f03c834a');
 INSERT INTO group_user ("groups_id", "users_id")
 VALUES  (3, '71677904-aa91-4894-96b7-45521a921172');
 INSERT INTO group_user ("groups_id", "users_id")
@@ -100,7 +100,7 @@ VALUES (3, 'd7ab172c-7cab-4bf1-b94e-3e38a7400793');
 INSERT INTO group_user ("groups_id", "users_id")
 VALUES  (3, '4535e26b-692c-4fc6-a1c9-9e164d1daf7c');
 INSERT INTO group_user ("groups_id", "users_id")
-VALUES  (3, '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad');
+VALUES  (3, '8828d6bd-b2d0-4bd4-aaae-4cb5f03c834a');
 INSERT INTO group_user ("groups_id", "users_id")
 VALUES  (5, '71677904-aa91-4894-96b7-45521a921172');
 INSERT INTO group_user ("groups_id", "users_id")
@@ -108,9 +108,7 @@ VALUES (5, 'd7ab172c-7cab-4bf1-b94e-3e38a7400793');
 INSERT INTO group_user ("groups_id", "users_id")
 VALUES  (5, '4535e26b-692c-4fc6-a1c9-9e164d1daf7c');
 INSERT INTO group_user ("groups_id", "users_id")
-VALUES  (5, '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad');
-INSERT INTO group_user ("groups_id", "users_id")
-VALUES  (2, '700a6c07-f116-4cb4-bf7e-0930a9d4b9ad');
+VALUES  (5, '8828d6bd-b2d0-4bd4-aaae-4cb5f03c834a');
 INSERT INTO group_user ("groups_id", "users_id")
 VALUES  (3, 'mockuser1');
 INSERT INTO group_user ("groups_id", "users_id")
@@ -184,7 +182,7 @@ VALUES ('2023-10-10 10:15', '2023-10-10', '71677904-aa91-4894-96b7-45521a921172'
         'Designing with simplicity in mind is like telling a story with few words - it ensures clarity and ease of use.', 2);
 
 INSERT INTO Post (created_at, updated_at, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-10-10 10:15', '2023-10-10', 'mockuser3', 1,
+VALUES ('2023-10-10 10:15', '2023-10-10', 'mockuser1', 1,
         'Mjau',
         'mjau mjau', 2);
 -- Post 4
