@@ -101,6 +101,32 @@ public class PostController {
         // return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
+    @PostMapping("/event")
+    @Operation(summary = "Add a Event", tags = {"Posts", "Post"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created", content = @Content)
+    })
+    public ResponseEntity<Object> addEvent(@AuthenticationPrincipal Jwt principal, @RequestBody PostEventDTO entity) {
+        // Get the currently authenticated user's ID from the Keycloak principal
+        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
+        String userId = userInfo.get("subject");
+
+        // Create the Post object with the required fields
+        Post post = new Post();
+        post.setTitle(entity.getTitle());
+        post.setContent(entity.getContent());
+        post.setSenderId(userService.findById(userId));
+        post.setIsEvent(true);
+        post.setStartsAt(entity.getStartsAt());
+        post.setEndsAt(entity.getEndsAt());
+
+        postService.add(post);
+
+        // Create the URI for the newly created post
+        URI uri = URI.create("api/v1/posts/event" + post.getId());
+        return ResponseEntity.created(uri).body(post.getId());
+    }
+
     @PostMapping
     @Operation(summary = "Add a post", tags = {"Posts", "Post"})
     @ApiResponses(value = {
