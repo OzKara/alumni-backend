@@ -20,6 +20,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "select * from Post p where p.users_id = ?1 and p.owner_id = ?2 and ((lower(p.title) like (%?3%) or (lower(p.content) like (%?3%)))) ORDER BY created_at DESC limit ?4 offset ?5", nativeQuery = true)
     Set<Post> findPostsToUserFromSpecificUserWithSearchLimitOffset(String userId, String senderId, String search, int limit, int offset);
 
+    @Query(value = "SELECT * FROM post p WHERE p.is_event = TRUE", nativeQuery = true)
+    Collection<Post> findPostThatIsAlsoEvent();
+
     @Query(value = "SELECT * FROM post WHERE parent_id IS NULL", nativeQuery = true)
     Collection<Post> findByReplyParentIdIsNull();
 }

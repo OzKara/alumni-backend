@@ -5,7 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity
@@ -19,15 +22,19 @@ public class Post {
 
     @Column(name = "created_at")
     @CreationTimestamp
-
     @Temporal(TemporalType.TIMESTAMP)
-    private java.time.ZonedDateTime createdAt;
+    private ZonedDateTime createdAt;
 
-    @Column(name = "updated_at")
-    @UpdateTimestamp
-
+    @Column(name = "starts_at", columnDefinition = "TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
-    private java.time.ZonedDateTime updatedAt;
+    private LocalDateTime startsAt;
+
+    @Column(name = "ends_at", columnDefinition = "TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime endsAt;
+
+    @Column(name = "is_event", columnDefinition = "boolean default false")
+    private  boolean isEvent;
 
     @Column
     private String title;

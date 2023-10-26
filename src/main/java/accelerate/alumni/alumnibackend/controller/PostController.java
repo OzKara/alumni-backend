@@ -2,10 +2,7 @@ package accelerate.alumni.alumnibackend.controller;
 
 import accelerate.alumni.alumnibackend.model.Post;
 import accelerate.alumni.alumnibackend.mappers.PostMapper;
-import accelerate.alumni.alumnibackend.model.dtos.post.PostDTO;
-import accelerate.alumni.alumnibackend.model.dtos.post.PostPostDTO;
-import accelerate.alumni.alumnibackend.model.dtos.post.PostPutDTO;
-import accelerate.alumni.alumnibackend.model.dtos.post.ReplyDTO;
+import accelerate.alumni.alumnibackend.model.dtos.post.*;
 import accelerate.alumni.alumnibackend.service.post.PostService;
 import accelerate.alumni.alumnibackend.service.user.UserService;
 import accelerate.alumni.alumnibackend.util.KeycloakInfo;
@@ -59,6 +56,23 @@ public class PostController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(postMapper.postToPostDTO(post));
+    }
+
+    @GetMapping("/events")
+    @Operation(summary = "Get all events", tags = {"Posts", "Get"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                            schema = @Schema(implementation = PostEventDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Event not found", content = @Content)
+
+    })
+    public ResponseEntity<Collection<PostEventDTO>> findAllEvents() {
+        Collection<Post> post = postService.findAllEvents().stream()
+                .sorted(Comparator.comparing(Post::getId).reversed())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(postMapper.postToPostEventDTO(post));
     }
 
     @GetMapping("{id}")
@@ -326,6 +340,8 @@ public class PostController {
         URI uri = URI.create("api/v1/post/" + replyPostId);
         return ResponseEntity.created(uri).body(replyPostId);
     }
+
+
 
 
 }

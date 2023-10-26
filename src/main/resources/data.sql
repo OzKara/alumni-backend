@@ -148,49 +148,54 @@ VALUES  (5, 'mockuser12');
 
 
 -- Post 1
-INSERT INTO Post (created_at, updated_at, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-10-10 10:15', '2023-10-10', '7e68cd4b-7bd0-4ab1-b2df-09bf54f7e87e', 1,
+INSERT INTO Post (created_at, starts_at, ends_at, is_event, owner_id, origin_id, title, content, group_id)
+VALUES ('2023-10-10 10:15', null, null, false, '7e68cd4b-7bd0-4ab1-b2df-09bf54f7e87e', 1,
         'Alumni applikasjonen',
         'Hva synes dere om denne applikasjonen? Vennligst gi svar under', 2);
 
 -- Post 2
-INSERT INTO Post (created_at, updated_at, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-10-10 10:15', '2023-10-10', '4535e26b-692c-4fc6-a1c9-9e164d1daf7c', 1,
+INSERT INTO Post (created_at, starts_at, ends_at, is_event, owner_id, origin_id, title, content, group_id)
+VALUES ('2023-10-10 10:15', null, null, false, '4535e26b-692c-4fc6-a1c9-9e164d1daf7c', 1,
         'Okaaaaay ',
         'leezgo', 2);
 
 -- Post 3
-INSERT INTO Post (created_at, updated_at, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-10-10 10:15', '2023-10-10', '71677904-aa91-4894-96b7-45521a921172', 1,
+INSERT INTO Post (created_at, starts_at, ends_at, is_event, owner_id, origin_id, title, content, group_id)
+VALUES ('2023-10-10 10:15', null, null, false, '71677904-aa91-4894-96b7-45521a921172', 1,
         'Simplicity in Design',
         'Designing with simplicity in mind is like telling a story with few words - it ensures clarity and ease of use.', 2);
 
-INSERT INTO Post (created_at, updated_at, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-10-10 10:15', '2023-10-10', 'mockuser1', 1,
+INSERT INTO Post (created_at, starts_at, ends_at, is_event, owner_id, origin_id, title, content, group_id)
+VALUES ('2023-10-10 10:15', null, null, false, 'mockuser1', 1,
         'Mjau',
         'mjau mjau', 2);
 -- Post 4
-INSERT INTO Post (created_at, updated_at, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-10-10 10:15', '2023-10-10', 'd7ab172c-7cab-4bf1-b94e-3e38a7400793', 1,
+INSERT INTO Post (created_at, starts_at, ends_at, is_event, owner_id, origin_id, title, content, group_id)
+VALUES ('2023-10-10 10:15', null, null, false, 'd7ab172c-7cab-4bf1-b94e-3e38a7400793', 1,
         'Responsive Web Design',
         'Creating responsive web designs is like building a flexible house - it adapts to different screen sizes and devices.', 2);
 
-INSERT INTO Post (created_at, updated_at, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-10-10 10:15', '2023-10-10', 'mockuser2', 1,
+INSERT INTO Post (created_at, starts_at, ends_at, is_event, owner_id, origin_id, title, content, group_id)
+VALUES ('2023-10-10 10:15', null, null, false, 'mockuser2', 1,
         'Gratuler meg!',
         'Jeg fikk meg jobb i går på Power!! Jeg er så glad', 2);
 
 
 
 -- Post 4
-INSERT INTO Post (created_at, updated_at, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-10-10 10:15', '2023-10-10', '71677904-aa91-4894-96b7-45521a921172', 1,
+INSERT INTO Post (created_at, starts_at, ends_at, is_event, owner_id, origin_id, title, content, group_id)
+VALUES ('2023-10-10 10:15', null, null, false, '71677904-aa91-4894-96b7-45521a921172', 1,
         'Stor dag i dag',
         'Stor dag i dag, presentasjon på Noroff. Ønsk oss lykke til', 2);
 
 
-INSERT INTO Post (created_at, updated_at, owner_id, origin_id, title, content, group_id)
-VALUES ('2023-10-10 10:15', '2023-10-10', '4535e26b-692c-4fc6-a1c9-9e164d1daf7c', 1,
+INSERT INTO Post (created_at, starts_at, ends_at, is_event, owner_id, origin_id, title, content, group_id)
+VALUES ('2023-10-10 10:15', null, null, false, '4535e26b-692c-4fc6-a1c9-9e164d1daf7c', 1,
+        'Presentations at Noroff today',
+        'The students at the course are having presentations today, i cant wait to roast them', 2);
+
+INSERT INTO Post (created_at, starts_at, ends_at, is_event, owner_id, origin_id, title, content, group_id)
+VALUES ('2023-10-10 10:15', '2023-10-27 10:00', '2023-10-28 12:00', true, '4535e26b-692c-4fc6-a1c9-9e164d1daf7c', 1,
         'Presentations at Noroff today',
         'The students at the course are having presentations today, i cant wait to roast them', 2);
 

@@ -5,6 +5,7 @@ import accelerate.alumni.alumnibackend.model.Post;
 import accelerate.alumni.alumnibackend.model.User;
 import accelerate.alumni.alumnibackend.model.dtos.group.GroupMiniDTO;
 import accelerate.alumni.alumnibackend.model.dtos.post.PostDTO;
+import accelerate.alumni.alumnibackend.model.dtos.post.PostEventDTO;
 import accelerate.alumni.alumnibackend.model.dtos.post.PostPostDTO;
 import accelerate.alumni.alumnibackend.model.dtos.post.PostPutDTO;
 import accelerate.alumni.alumnibackend.model.dtos.user.SenderDTO;
@@ -39,12 +40,13 @@ public abstract class PostMapper {
     @Mapping(target = "replies", source = "replies", qualifiedByName = "postsToPostId")
     @Mapping(target = "originId", source = "origin.id")
     @Mapping(target = "createdAt", source = "createdAt")
-    @Mapping(target = "updatedAt", source = "updatedAt")
     public abstract PostDTO postToPostDTO(Post post);
 
     public abstract Collection<PostDTO> postToPostDTO(Collection<Post> posts);
 
     public abstract Post postPutDTOToPost(PostPutDTO postPutDTO);
+
+    public abstract Collection<PostEventDTO> postToPostEventDTO(Collection<Post> posts);
 
     //@Mapping(target = "senderId", source = "senderId")
     //@Mapping(target = "replyParentId", source = "replyParentId", qualifiedByName = "parentPostIdToPost")

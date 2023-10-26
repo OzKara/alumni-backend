@@ -32,6 +32,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Collection<Post> findAllEvents() {
+        return postRepository.findPostThatIsAlsoEvent();
+    }
+
+    @Override
     public Post add(Post post) {
         return postRepository.save(post);
     }
