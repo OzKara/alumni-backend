@@ -46,7 +46,7 @@ public class PostServiceImpl implements PostService {
         if(postRepository.existsById(post.getId())) {
             return postRepository.save(post);
         } else {
-            throw new RuntimeException("Post with id " + post.getId() + " does not exist");
+            throw new PostNotFoundException(post.getId());
         }
     }
 
@@ -60,7 +60,7 @@ public class PostServiceImpl implements PostService {
         if (postRepository.existsById(id)) {
             postRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Post with id " + id + " does not exist");
+            throw new PostNotFoundException(id);
         }
     }
 

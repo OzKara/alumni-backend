@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -36,21 +34,14 @@ public class Post {
     @Column(name = "is_event", columnDefinition = "boolean default false")
     private Boolean isEvent;
 
-    @Column
+    @Column(nullable = false, length = 1500)
     private String title;
 
-    @Column(length = 4000)
+    @Column(length = 5000)
     private String content;
 
     @Column(name = "post_target")
     private String postTarget;
-
-    @ManyToOne
-    @JoinColumn(name = "origin_id")
-    private Post origin;
-
-    @OneToMany(mappedBy = "origin")
-    private Set<Post> thread;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")

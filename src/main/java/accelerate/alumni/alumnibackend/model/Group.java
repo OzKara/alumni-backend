@@ -15,10 +15,10 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false, length = 1000)
     private String name;
 
-    @Column
+    @Column(length = 3000)
     private String description;
 
     @Column

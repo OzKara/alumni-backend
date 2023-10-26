@@ -21,7 +21,6 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -59,7 +58,7 @@ public class PostController {
     }
 
     @GetMapping("/events")
-    @Operation(summary = "Get all events", tags = {"Posts", "Get"})
+    @Operation(summary = "Get all events", tags = {"Events", "Get"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -90,19 +89,11 @@ public class PostController {
         Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
         Post post = postService.findById(id);
         String userId = userInfo.get("subject");
-        /*if (post.getPostTarget().equals("USER") && (post.getTargetUser().getId().equals(userId) || post.getSenderId().getId().equals(userId)))
-        if (post.getPostTarget().equals("GROUP") && (!post.getTargetGroup().isPrivate() || post.getTargetGroup().getUsers().contains(usersService.findById(userId))))
-            return ResponseEntity.ok(postMapper.postToPostDTO(post));
-        if (post.getPostTarget().equals("TOPIC"))
-            return ResponseEntity.ok(postMapper.postToPostDTO(post));
-            */
         return ResponseEntity.ok(postMapper.postToPostDTO(post));
-
-        // return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
     @PostMapping("/event")
-    @Operation(summary = "Add a Event", tags = {"Posts", "Post"})
+    @Operation(summary = "Add a Event", tags = {"Events", "Post"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created", content = @Content)
     })
@@ -175,9 +166,7 @@ public class PostController {
         post.setSenderId(oldPost.getSenderId());
         post.setReplyParentId(oldPost.getReplyParentId());
         post.setReplies(oldPost.getReplies());
-        post.setOrigin(oldPost.getOrigin());
         post.setTargetUser(oldPost.getTargetUser());
-        //post.setTargetTopic(oldPost.getTargetTopic());
         post.setTargetGroup(oldPost.getTargetGroup());
 
         postService.update(post);
@@ -194,21 +183,6 @@ public class PostController {
         postService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-
-    /*@GetMapping("/topic/{id}")
-    @Operation(summary = "Get all posts in a topic", tags = {"Posts", "Topic", "Get"})
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            array = @ArraySchema(schema = @Schema(implementation = PostDTO.class)))),
-            @ApiResponse(responseCode = "404", description = "Posts not found", content = @Content)
-    })
-    public ResponseEntity<Collection<PostDTO>> findAllPostsInATopic(@PathVariable int id, @RequestParam Optional<String> search, Optional<Integer> limit, Optional<Integer> offset) {
-        String searching = search.orElse("").toLowerCase();
-        int limiting = limit.orElse(999999999);
-        int offsetting = offset.orElse(0);
-        return ResponseEntity.ok(postMapper.postToPostDTO(postService.findAllPostsInTopic(id, searching, limiting, offsetting)));
-    }*/
 
     @GetMapping("/group/{id}")
     @Operation(summary = "Get all posts in a group", tags = {"Posts", "Group", "Get"})
@@ -259,56 +233,8 @@ public class PostController {
         return ResponseEntity.ok(postMapper.postToPostDTO(postService.findAllPostsToUserFromSpecificUser(userId, senderId, searching, limiting, offsetting)));
     }
 
-    /*@GetMapping
-    @Operation(summary = "Get all posts a user is subscribed to", tags = {"Posts", "Users", "Get"})
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            array = @ArraySchema(schema = @Schema(implementation = PostDTO.class)))),
-            @ApiResponse(responseCode = "404", description = "Posts not found", content = @Content)
-    })
-    public ResponseEntity<Collection<PostDTO>> findPostsUserIsSubscribedTo( @RequestParam Optional<String> search, Optional<Integer> limit, Optional<Integer> offset) {
-        String userId = "lucas";
-        String searching = search.orElse("").toLowerCase();
-        int limiting = limit.orElse(999999999);
-        int offsetting = offset.orElse(0);
-        return ResponseEntity.ok(postMapper.postToPostDTO(postService.findPostsUserSubscribedTo(userId, searching, limiting, offsetting)));
-    }
-
-    /*@GetMapping("/topic")
-    @Operation(summary = "Get all posts from topics a user is subscribed to", tags = {"Posts", "Topic", "Users", "Get"})
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            array = @ArraySchema(schema = @Schema(implementation = PostDTO.class)))),
-            @ApiResponse(responseCode = "404", description = "Posts not found", content = @Content)
-    })
-    public ResponseEntity<Collection<PostDTO>> findPostInTopicUserIsSubscribedTo( @RequestParam Optional<String> search, Optional<Integer> limit, Optional<Integer> offset) {
-        String userId = "lucas";
-        String searching = search.orElse("").toLowerCase();
-        int limiting = limit.orElse(999999999);
-        int offsetting = offset.orElse(0);
-        return ResponseEntity.ok(postMapper.postToPostDTO(postService.findPostsFromTopicUserIsSubscribedTo(userId, searching, limiting, offsetting)));
-    }*/
-
-    /*@GetMapping("/group")
-    @Operation(summary = "Get all posts from groups a user is subscribed to", tags = {"Posts", "Group", "Users", "Get"})
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Success",
-                    content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            array = @ArraySchema(schema = @Schema(implementation = PostDTO.class)))),
-            @ApiResponse(responseCode = "404", description = "Posts not found", content = @Content)
-    })
-    public ResponseEntity<Collection<PostDTO>> findPostInGroupUserIsSubscribedTo(@RequestParam Optional<String> search, Optional<Integer> limit, Optional<Integer> offset) {
-        String userId = "lucas";
-        String searching = search.orElse("").toLowerCase();
-        int limiting = limit.orElse(999999999);
-        int offsetting = offset.orElse(0);
-        return ResponseEntity.ok(postMapper.postToPostDTO(postService.findPostsFromGroupUserIsSubscribedTo(userId, searching, limiting, offsetting)));
-    }
-*/
     @GetMapping("{id}/replies")
-    @Operation(summary = "Get all replies for a post", tags = {"Posts", "Users", "Get"})
+    @Operation(summary = "Get all replies for a post", tags = {"Posts", "Replies", "Get"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -354,7 +280,6 @@ public class PostController {
         replyPost.setSenderId(userService.findById(userId)); // Replace with the appropriate user ID
 
         // Set the origin and replyParentId for the reply
-        replyPost.setOrigin(parentPost);
         replyPost.setReplyParentId(parentPost);
 
         // Add the reply post to the database
@@ -366,8 +291,4 @@ public class PostController {
         URI uri = URI.create("api/v1/post/" + replyPostId);
         return ResponseEntity.created(uri).body(replyPostId);
     }
-
-
-
-
 }

@@ -11,5 +11,5 @@ public interface GroupService extends CRUDService<Group, Long> {
     Group removeUserFromGroup(String userId, Long groupId);
     Set<Group> findGroupsWithUser(String userId);
     Group findByIdWhereUserHasAccess(String userId, Long groupId);
-    boolean checkIfUserInGroup(String userId, Long groupId);
+    boolean checkIfUserIsInGroup(String userId, Long groupId);
 }
