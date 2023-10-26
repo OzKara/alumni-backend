@@ -87,7 +87,7 @@ public class GroupController {
     public ResponseEntity<Object> add(@RequestBody GroupPostDTO entity, @AuthenticationPrincipal Jwt principal) {
         Group group = groupMapper.groupPostDTOToGroup(entity);
         Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
-        String id = userInfo.get("subject");;
+        String id = userInfo.get("subject");
         Set<User> user = new HashSet<>();
         user.add(userService.findById(id));
         group.setUsers(user);
@@ -134,7 +134,7 @@ public class GroupController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         String userId = user.orElse("");
-        if (userId.equals("")) {
+        if (userId.isEmpty()) {
             userId = userInfo.get("subject");
         }
         groupService.addUserToGroup(userId, id);
@@ -152,7 +152,7 @@ public class GroupController {
     public ResponseEntity<Collection<GroupDTO>> findGroupsForAUser(@AuthenticationPrincipal Jwt principal) {
         Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
         String userId = userInfo.get("subject");
-        return ResponseEntity.ok(groupMapper.groupToGroupDTO(groupService.findGroupsWithUser(userId)));
+        return ResponseEntity.ok(groupMapper.groupToGroupDTO(groupService.findGroupsWhereUserIsMember(userId)));
     }
 
     @GetMapping("{id}/user/list")

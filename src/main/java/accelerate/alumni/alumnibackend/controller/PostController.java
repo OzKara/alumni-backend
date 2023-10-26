@@ -85,10 +85,7 @@ public class PostController {
 
     })
     public ResponseEntity<PostDTO> findById(@AuthenticationPrincipal Jwt principal, @PathVariable Long id) {
-
-        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
         Post post = postService.findById(id);
-        String userId = userInfo.get("subject");
         return ResponseEntity.ok(postMapper.postToPostDTO(post));
     }
 

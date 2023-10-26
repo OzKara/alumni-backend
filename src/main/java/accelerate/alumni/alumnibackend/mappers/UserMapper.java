@@ -33,7 +33,7 @@ public interface UserMapper {
         if (value == null)
             return new HashSet<>();
         return value.stream()
-                .map(s -> s.getId())
+                .map(Group::getId)
                 .collect(Collectors.toSet());
     }
 }

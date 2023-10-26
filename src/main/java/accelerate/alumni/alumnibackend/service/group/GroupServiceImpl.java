@@ -73,7 +73,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Set<Group> findGroupsWithUser(String userId) {
+    public Set<Group> findGroupsWhereUserIsMember(String userId) {
         return groupRepository.findGroupsAUserIsIn(userId);
     }
 

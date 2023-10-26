@@ -32,11 +32,9 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private Set<Group> groups;
 
-    // This is the users "DM" posts
     @OneToMany(mappedBy = "targetUser")
     private Set<Post> posts;
 
-    // This is the users own posts
     @OneToMany(mappedBy = "senderId")
     private Set<Post> posted;
 
