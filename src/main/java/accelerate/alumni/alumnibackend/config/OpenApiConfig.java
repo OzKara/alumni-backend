@@ -21,9 +21,11 @@ import org.springframework.context.annotation.Configuration;
         ),
         security = {@SecurityRequirement(name = "bearer-key")},  // This refers to the SecurityScheme defined below
         tags = {
+                @Tag(name = "Users", description = "All endpoints related to users"),
+                @Tag(name = "Posts", description = "All endpoints related to posts"),
+                @Tag(name = "Events", description = "All endpoints related to events"),
+                @Tag(name = "Replies", description = "All endpoints related to replies"),
                 @Tag(name = "Group", description = "All endpoints related to groups"),
-                @Tag(name = "Post", description = "All endpoints related to posts"),
-                @Tag(name = "User", description = "All endpoints related to users"),
                 @Tag(name = "Get", description = "All get endpoints"),
                 @Tag(name = "Post", description = "All post endpoints"),
                 @Tag(name = "Put", description = "All put endpoints"),
