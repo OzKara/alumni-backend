@@ -34,7 +34,7 @@ public class Post {
     private LocalDateTime endsAt;
 
     @Column(name = "is_event", columnDefinition = "boolean default false")
-    private  boolean isEvent;
+    private Boolean isEvent;
 
     @Column
     private String title;

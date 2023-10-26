@@ -18,7 +18,7 @@ public class PostDTO {
     private ZonedDateTime createdAt;
     private LocalDateTime startsAt;
     private LocalDateTime endsAt;
-    private boolean isEvent;
+    private Boolean isEvent;
     private String title;
     private String content;
     private String postTarget;
