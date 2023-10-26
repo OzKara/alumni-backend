@@ -178,7 +178,7 @@ VALUES ('2023-10-10 10:15', null, null, false, 'd7ab172c-7cab-4bf1-b94e-3e38a740
 INSERT INTO Post (created_at, starts_at, ends_at, is_event, owner_id, title, content, group_id)
 VALUES ('2023-10-10 10:15', null, null, false, 'mockuser2',
         'Gratuler meg!',
-        'Jeg fikk meg jobb i går på Power!! Jeg er så glad', 2);
+        'Jeg fikk meg jobb på Power!! Jeg er så glad', 2);
 
 
 
@@ -195,7 +195,7 @@ VALUES ('2023-10-10 10:15', null, null, false, '4535e26b-692c-4fc6-a1c9-9e164d1d
         'The students at the course are having presentations today, i cant wait to roast them', 2);
 
 INSERT INTO Post (created_at, starts_at, ends_at, is_event, owner_id, title, content, group_id)
-VALUES ('2023-10-10 10:15', '2023-10-27 10:00', '2023-10-28 12:00', true, '4535e26b-692c-4fc6-a1c9-9e164d1daf7c',
-        'Presentations at Noroff today',
-        'The students at the course are having presentations today, i cant wait to roast them', 2);
+VALUES ('2023-10-25 10:15', '2023-10-27 10:00', '2023-10-28 12:00', true, '4535e26b-692c-4fc6-a1c9-9e164d1daf7c',
+        'Presentation day',
+        'this is an event for presentation days for Wednesday and Friday', 2);
 

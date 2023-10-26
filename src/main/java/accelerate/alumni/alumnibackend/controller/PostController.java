@@ -99,7 +99,6 @@ public class PostController {
         Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
         String userId = userInfo.get("subject");
 
-        // Create the Post object with the required fields
         Post post = new Post();
         post.setTitle(entity.getTitle());
         post.setContent(entity.getContent());
