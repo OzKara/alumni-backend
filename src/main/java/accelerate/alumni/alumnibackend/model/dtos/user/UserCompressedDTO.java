@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserMiniDTO {
+public class UserCompressedDTO {
     private String name;
 }

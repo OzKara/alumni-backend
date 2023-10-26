@@ -9,7 +9,7 @@ public interface GroupService extends CRUDService<Group, Long> {
     Set<Group> searchResultsWithLimitOffset(String userId, String search, int offset, int limit);
     Group addUserToGroup(String userId, Long groupId);
     Group removeUserFromGroup(String userId, Long groupId);
-    Set<Group> findGroupsWithUser(String userId);
+    Set<Group> findGroupsWhereUserIsMember(String userId);
     Group findByIdWhereUserHasAccess(String userId, Long groupId);
-    boolean checkIfUserInGroup(String userId, Long groupId);
+    boolean checkIfUserIsInGroup(String userId, Long groupId);
 }

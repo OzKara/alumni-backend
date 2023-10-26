@@ -1,8 +1,8 @@
 package accelerate.alumni.alumnibackend.service.user;
 
+import accelerate.alumni.alumnibackend.exceptions.UserNotFoundException;
 import accelerate.alumni.alumnibackend.model.User;
 import accelerate.alumni.alumnibackend.repository.UserRepository;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findById(String id) {
-        return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(id));
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @Override

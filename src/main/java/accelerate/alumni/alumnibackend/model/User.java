@@ -23,31 +23,19 @@ public class User {
     @Column
     private String status;
 
-    @Column
+    @Column(length = 1000)
     private String bio;
 
-    @Column(name = "fun_fact")
+    @Column(name = "fun_fact", length = 2000)
     private String funFact;
 
     @ManyToMany(mappedBy = "users")
     private Set<Group> groups;
 
-    // This is the users "DM" posts
     @OneToMany(mappedBy = "targetUser")
     private Set<Post> posts;
 
-    // This is the users own posts
     @OneToMany(mappedBy = "senderId")
     private Set<Post> posted;
 
-    /*
-        @Column(nullable = false)
-    private String profile_picture;
-
-    @Column(length = 2000)
-    private String biography;
-
-    @Column(length = 50)
-    private String fun_fact;
-     */
 }

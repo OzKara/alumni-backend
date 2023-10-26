@@ -87,7 +87,7 @@ public class GroupController {
     public ResponseEntity<Object> add(@RequestBody GroupPostDTO entity, @AuthenticationPrincipal Jwt principal) {
         Group group = groupMapper.groupPostDTOToGroup(entity);
         Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
-        String id = userInfo.get("subject");;
+        String id = userInfo.get("subject");
         Set<User> user = new HashSet<>();
         user.add(userService.findById(id));
         group.setUsers(user);
@@ -107,7 +107,7 @@ public class GroupController {
         Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
         if (!groupService.existsById(id))
             return ResponseEntity.badRequest().build();
-        if (!groupService.checkIfUserInGroup(userInfo.get("subject"), id))
+        if (groupService.checkIfUserIsInGroup(userInfo.get("subject"), id))
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         Group group = groupMapper.groupPutDTOToGroup(entity);
         Group oldGroup = groupService.findById(id);
@@ -130,33 +130,16 @@ public class GroupController {
         boolean privateGroup = groupService.findById(id).isPrivate();
         Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
         if (privateGroup) {
-            if (!groupService.checkIfUserInGroup(userInfo.get("subject"), id))
+            if (groupService.checkIfUserIsInGroup(userInfo.get("subject"), id))
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         String userId = user.orElse("");
-        if (userId.equals("")) {
+        if (userId.isEmpty()) {
             userId = userInfo.get("subject");
         }
         groupService.addUserToGroup(userId, id);
         return ResponseEntity.noContent().build();
     }
-
-    /*@PutMapping("{id}/leave")
-    @Operation(summary = "Remove a user from a group", tags = {"Group", "Users", "Put"})
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Group updated", content = @Content),
-            @ApiResponse(responseCode = "400", description = "Bad request, URI does not match request body", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Group not found", content = @Content)
-    })
-    public ResponseEntity<Object> removeUserFromGroup( @PathVariable Long id, @AuthenticationPrincipal Jwt principal) {
-        Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
-        if (!groupService.existsById(id))
-            return ResponseEntity.badRequest().build();
-
-        String userId = userInfo.get("subject");
-        groupService.removeUserFromGroup(userId, id);
-        return ResponseEntity.noContent().build();
-    }*/
 
     @GetMapping("/user")
     @Operation(summary = "Get all groups for a user", tags = {"Group", "Users", "Get"})
@@ -169,7 +152,7 @@ public class GroupController {
     public ResponseEntity<Collection<GroupDTO>> findGroupsForAUser(@AuthenticationPrincipal Jwt principal) {
         Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
         String userId = userInfo.get("subject");
-        return ResponseEntity.ok(groupMapper.groupToGroupDTO(groupService.findGroupsWithUser(userId)));
+        return ResponseEntity.ok(groupMapper.groupToGroupDTO(groupService.findGroupsWhereUserIsMember(userId)));
     }
 
     @GetMapping("{id}/user/list")

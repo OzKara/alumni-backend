@@ -2,8 +2,8 @@
 
     import accelerate.alumni.alumnibackend.mappers.UserMapper;
     import accelerate.alumni.alumnibackend.model.User;
+    import accelerate.alumni.alumnibackend.model.dtos.user.UserCompressedDTO;
     import accelerate.alumni.alumnibackend.model.dtos.user.UserDTO;
-    import accelerate.alumni.alumnibackend.model.dtos.user.UserMiniDTO;
     import accelerate.alumni.alumnibackend.model.dtos.user.UserPutDTO;
     import accelerate.alumni.alumnibackend.service.user.UserService;
     import accelerate.alumni.alumnibackend.util.KeycloakInfo;
@@ -13,7 +13,6 @@
     import io.swagger.v3.oas.annotations.media.Schema;
     import io.swagger.v3.oas.annotations.responses.ApiResponse;
     import io.swagger.v3.oas.annotations.responses.ApiResponses;
-    import org.springframework.http.HttpStatus;
     import org.springframework.http.MediaType;
     import org.springframework.http.ResponseEntity;
     import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,7 +39,7 @@
         }
 
         @GetMapping("{id}")
-        @Operation(summary = "Get a user by its id", tags = {"User", "Get"})
+        @Operation(summary = "Get a user by its id", tags = {"Users", "Get"})
         @ApiResponses(value = {
                 @ApiResponse(responseCode = "200", description = "Success",
                         content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -52,18 +51,18 @@
         }
 
         @GetMapping("/list")
-        @Operation(summary = "Get all users", tags = {"User", "Get"})
+        @Operation(summary = "Get all users", tags = {"Users", "Get"})
         @ApiResponses(value = {
                 @ApiResponse(responseCode = "200", description = "Success",
                         content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                array = @ArraySchema(schema = @Schema(implementation = UserMiniDTO.class)))})
+                                array = @ArraySchema(schema = @Schema(implementation = UserCompressedDTO.class)))})
         })
-        public ResponseEntity<Collection<UserMiniDTO>> findAll() {
+        public ResponseEntity<Collection<UserCompressedDTO>> findAll() {
             return ResponseEntity.ok(userMapper.usersToUsersMiniDTO(userService.findAll()));
         }
 
         @GetMapping("/current")
-        @Operation(summary = "Get current user", tags = {"User", "Get"})
+        @Operation(summary = "Get current user", tags = {"Users", "Get"})
         @ApiResponses(value = {
                 @ApiResponse(responseCode = "200", description = "Success",
                         content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -77,7 +76,7 @@
         }
 
         @GetMapping("/users")
-        @Operation(summary = "Get all users", tags = {"User", "Get All"})
+        @Operation(summary = "Get all users", tags = {"Users", "Get"})
         @ApiResponses(value = {
                 @ApiResponse(responseCode = "200", description = "Success",
                         content = {@Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -92,7 +91,7 @@
         }
 
         @PostMapping
-        @Operation(summary = "Add a user", tags = {"User", "Post"})
+        @Operation(summary = "Add a user", tags = {"Users", "Post"})
         @ApiResponses(value = {
                 @ApiResponse(responseCode = "201", description = "Created", content = @Content)
         })
@@ -129,7 +128,7 @@
         }
 
         @PutMapping("{id}")
-        @Operation(summary = "Update a user", tags = {"User", "Put"})
+        @Operation(summary = "Update a user", tags = {"Users", "Put"})
         @ApiResponses(value = {
                 @ApiResponse(responseCode = "204", description = "User updated", content = @Content),
                 @ApiResponse(responseCode = "400", description = "Bad request, URI does not match request body", content = @Content),

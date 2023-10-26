@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class GroupMiniDTO {
+public class GroupCompressedDTO {
     private Long id;
     private String name;
 }

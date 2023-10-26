@@ -1,14 +1,12 @@
 package accelerate.alumni.alumnibackend.model.dtos.post;
 
-import accelerate.alumni.alumnibackend.model.dtos.group.GroupMiniDTO;
+import accelerate.alumni.alumnibackend.model.dtos.group.GroupCompressedDTO;
 import accelerate.alumni.alumnibackend.model.dtos.user.SenderDTO;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.Set;
 
 @Getter
@@ -23,9 +21,8 @@ public class PostDTO {
     private String content;
     private String postTarget;
     private SenderDTO senderId;
-    private Long originId;
     private Long replyParentId;
     private Set<Long> replies;
     private SenderDTO targetUser;
-    private GroupMiniDTO targetGroup;
+    private GroupCompressedDTO targetGroup;
 }
