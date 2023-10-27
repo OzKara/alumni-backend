@@ -6,9 +6,10 @@ This repository houses the RESTful API code essential for data interfacing in th
 
 ## Table of Contents
 
-- [Background](#background)
+- [Background](#Background)
 - [Technologies](#Technologies)
 - [Installation](#Installation)
+- [API Documentation](#API_Documentation)
 - [Maintainers](#Maintainers)
 - [Contributing](#Contributing)
 - [License](#License)
@@ -50,6 +51,12 @@ set DATABASE_USER=your_username
 set DATABASE_PASS=your_password
 ```
 **Tip**: The commands provided are for the Windows command prompt. For macOS or Linux, adjust the commands to set environment variables specific to your platform.
+
+## API Documentation
+
+The API Documentation (with Swagger) can be found [here](https://alumni-web.azurewebsites.net/swagger-ui/index.html#/)
+
+Valid JWT token is required to access the endpoints.
 
 ## Maintainers
 
