@@ -263,7 +263,7 @@ public class PostController {
         Post parentPost = postService.findById(id);
 
         if (parentPost == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parent post not found");
         }
         // This is a reply to a post
         // Create a new post for the reply
@@ -272,6 +272,7 @@ public class PostController {
         Map<String, String> userInfo = keycloakInfo.getUserInfo(principal);
         String userId = userInfo.get("subject");
         // Set the reply content and sender ID
+        replyPost.setTitle("A post reply");
         replyPost.setContent(replyContent);
         replyPost.setSenderId(userService.findById(userId)); // Replace with the appropriate user ID
 
