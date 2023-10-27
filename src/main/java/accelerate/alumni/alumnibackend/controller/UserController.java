@@ -112,14 +112,14 @@
                 user.setStatus("I am very proud South African");
                 user.setPicture("https://static.noroff.no/cms/ansatte/acc/nicholas-lennox.jpg");
                 user.setBio("Okaaaaay lezgo");
-                user.setFunFact("Did you know that i have the world record in how many students i can roast in a day?, I am very proud of that, by the way");
+                user.setFunFact("Guess who is the second largest fruit producer in the world? Yes, you guessed it, South Africa.");
             } else {
                 user.setId(id);
                 user.setName(name);
                 user.setPicture("https://mybroadband.co.za/news/wp-content/uploads/2017/04/Twitter-profile-picture.jpg");
-                user.setBio("My Bio");
-                user.setFunFact("My Funfact");
-                user.setStatus("My Status");
+                user.setBio("Bio");
+                user.setFunFact("A fun fact");
+                user.setStatus("Status");
             }
             userService.add(user);
             URI uri = URI.create("api/v1/users/" + user.getId());
